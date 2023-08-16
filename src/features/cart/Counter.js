@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectCount } from "./authSlice";
+import { selectCount } from "./counterSlice";
 
 export default function Counter() {
 	const count = useSelector(selectCount);
