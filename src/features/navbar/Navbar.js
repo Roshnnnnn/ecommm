@@ -31,7 +31,7 @@ function classNames(...classes) {
 export default function Navbar({ children }) {
 	return (
 		<>
-			<div className="min-h-full">
+			<div className="min-h-full bg-gray-200">
 				<Disclosure as="nav" className="bg-gray-800">
 					{({ open }) => (
 						<>

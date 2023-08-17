@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../features/navbar/Navbar";
 import Product from "../features/product/Product";
+import Footer from "../features/common/Footer";
 
 const Home = () => {
 	return (
@@ -8,6 +9,7 @@ const Home = () => {
 			<Navbar>
 				<Product />
 			</Navbar>
+			<Footer />
 		</div>
 	);
 };
