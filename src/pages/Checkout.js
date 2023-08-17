@@ -52,7 +52,7 @@ const Checkout = () => {
 		<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 			<div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-5">
 				<div className="lg:col-span-3">
-					<form>
+					<form className="bg-white px-5 mt-12">
 						<div className="space-y-12">
 							<div className="border-b border-gray-900/10 pb-12">
 								<h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -322,7 +322,7 @@ const Checkout = () => {
 					</form>
 				</div>
 				<div className="lg:col-span-2">
-					<div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
+					<div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-0 lg:px-0">
 						<div className="border-t border-gray-200 px-4 py-6 sm:px-6">
 							<h1 className="text-4xl my-5 font-bold tracking-tight text-gray-900">
 								Cart
