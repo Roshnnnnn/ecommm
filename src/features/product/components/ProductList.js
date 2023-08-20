@@ -16,11 +16,11 @@ import {
 } from "@heroicons/react/20/solid";
 
 const sortOptions = [
-	{ name: "Most Popular", href: "#", current: true },
-	{ name: "Best Rating", href: "#", current: false },
-	{ name: "Newest", href: "#", current: false },
-	{ name: "Price: Low to High", href: "#", current: false },
-	{ name: "Price: High to Low", href: "#", current: false },
+	{ name: "Most Popular", to: "#", current: true },
+	{ name: "Best Rating", to: "#", current: false },
+	{ name: "Newest", to: "#", current: false },
+	{ name: "Price: Low to High", to: "#", current: false },
+	{ name: "Price: High to Low", to: "#", current: false },
 ];
 
 const filters = [
@@ -221,8 +221,8 @@ export default function Product() {
 												{sortOptions.map((option) => (
 													<Menu.Item key={option.name}>
 														{({ active }) => (
-															<a
-																href={option.href}
+															<Link
+																to={option.href}
 																className={classNames(
 																	option.current
 																		? "font-medium text-gray-900"
@@ -232,7 +232,7 @@ export default function Product() {
 																)}
 															>
 																{option.name}
-															</a>
+															</Link>
 														)}
 													</Menu.Item>
 												))}
@@ -349,13 +349,13 @@ export default function Product() {
 															<div className="mt-4 flex justify-between">
 																<div>
 																	<h3 className="text-sm text-gray-700">
-																		<a href={product.thumbnail}>
+																		<Link to={product.thumbnail}>
 																			<span
 																				aria-hidden="true"
 																				className="absolute inset-0"
 																			/>
 																			{product.name}
-																		</a>
+																		</Link>
 																	</h3>
 																	<p className="mt-1 text-sm text-gray-500">
 																		<StarIcon className="w-6 h-6 inline" />
@@ -417,7 +417,7 @@ export default function Product() {
 										aria-label="Pagination"
 									>
 										<Link
-											href="#"
+											to="#"
 											className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
 										>
 											<span className="sr-only">Previous</span>
