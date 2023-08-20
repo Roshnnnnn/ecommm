@@ -70,9 +70,9 @@ export default function Product() {
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 	const products = useSelector(selectAllProducts);
 
-	useEffect(() => {
-		dispatch(fetchAllProductAsync());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(fetchAllProductAsync());
+	// }, [dispatch]);
 
 	return (
 		<div>
