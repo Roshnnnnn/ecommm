@@ -222,7 +222,7 @@ export default function Product() {
 													<Menu.Item key={option.name}>
 														{({ active }) => (
 															<Link
-																to={option.href}
+																to={option.to}
 																className={classNames(
 																	option.current
 																		? "font-medium text-gray-900"
