@@ -1,7 +1,11 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchAllProductsAsync, selectAllProducts } from "../ProductSlice";
+import {
+	fetchAllProductsAsync,
+	selectAllProducts,
+	fetchProductByFiltersAsync,
+} from "../ProductSlice";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -33,6 +37,18 @@ const sortOptions = [
 
 const filters = [
 	{
+		id: "category",
+		name: "Category",
+		options: [
+			{ value: "smartphones", label: "smartphones", checked: true },
+			{ value: "laptop", label: "laptop", checked: false },
+			{ value: "fragrances", label: "fragrances", checked: false },
+			{ value: "skincare", label: "skincare", checked: false },
+			{ value: "groceries", label: "groceries", checked: false },
+			{ value: "home-decoration", label: "home decoration", checked: false },
+		],
+	},
+	{
 		id: "brand",
 		name: "Brands",
 		options: [
@@ -60,30 +76,6 @@ const filters = [
 			},
 		],
 	},
-	{
-		id: "category",
-		name: "Category",
-		options: [
-			{ value: "smartphones", label: "smartphones", checked: false },
-			{ value: "laptop", label: "laptop", checked: false },
-			{ value: "fragrances", label: "fragrances", checked: true },
-			{ value: "skincare", label: "skincare", checked: false },
-			{ value: "groceries", label: "groceries", checked: false },
-			{ value: "home-decoration", label: "home decoration", checked: false },
-		],
-	},
-	{
-		id: "size",
-		name: "Size",
-		options: [
-			{ value: "2l", label: "2L", checked: false },
-			{ value: "6l", label: "6L", checked: false },
-			{ value: "12l", label: "12L", checked: false },
-			{ value: "18l", label: "18L", checked: false },
-			{ value: "20l", label: "20L", checked: false },
-			{ value: "40l", label: "40L", checked: true },
-		],
-	},
 ];
 
 function classNames(...classes) {
@@ -92,8 +84,16 @@ function classNames(...classes) {
 
 export default function Product() {
 	const dispatch = useDispatch();
+	const [filter, setFilter] = useState({});
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 	const products = useSelector(selectAllProducts);
+
+	const handleFilter = (e, section, option) => {
+		const newFilter = { ...filter, [section.id]: option.value };
+		setFilter(newFilter);
+		dispatch(fetchProductByFiltersAsync(newFilter));
+		console.log(section.id, option.value);
+	};
 
 	useEffect(() => {
 		dispatch(fetchAllProductsAsync());
@@ -191,6 +191,9 @@ export default function Product() {
 																				defaultValue={option.value}
 																				type="checkbox"
 																				defaultChecked={option.checked}
+																				onChange={(e) =>
+																					handleFilter(e, section, option)
+																				}
 																				className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
 																			/>
 																			<label
