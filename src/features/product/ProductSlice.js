@@ -29,7 +29,7 @@ export const ProductSlice = createSlice({
 			})
 			.addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
 				state.status = "idle";
-				state.products += action.payload;
+				state.products.push(...action.payload);
 			});
 	},
 });
