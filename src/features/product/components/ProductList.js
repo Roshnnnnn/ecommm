@@ -16,24 +16,48 @@ import {
 } from "@heroicons/react/20/solid";
 
 const sortOptions = [
-	{ name: "Most Popular", to: "#", current: true },
-	{ name: "Best Rating", to: "#", current: false },
-	{ name: "Newest", to: "#", current: false },
-	{ name: "Price: Low to High", to: "#", current: false },
-	{ name: "Price: High to Low", to: "#", current: false },
+	{ name: "Best Rating", sort: "rating", order: "desc", current: false },
+	{
+		name: "Price: Low to High",
+		sort: "discountPrice",
+		order: "asc",
+		current: false,
+	},
+	{
+		name: "Price: High to Low",
+		sort: "discountPrice",
+		order: "desc",
+		current: false,
+	},
 ];
 
 const filters = [
 	{
-		id: "color",
-		name: "Color",
+		id: "brand",
+		name: "Brands",
 		options: [
-			{ value: "white", label: "White", checked: false },
-			{ value: "beige", label: "Beige", checked: false },
-			{ value: "blue", label: "Blue", checked: true },
-			{ value: "brown", label: "Brown", checked: false },
-			{ value: "green", label: "Green", checked: false },
-			{ value: "purple", label: "Purple", checked: false },
+			{ value: "Apple", label: "Apple", checked: true },
+			{ value: "Samsung", label: "Samsung", checked: false },
+			{ value: "Oppo", label: "Oppo", checked: false },
+			{ value: "Huawei", label: "Huawei", checked: false },
+			{
+				value: "Microsoft Surface",
+				label: "Microsoft Surface",
+				checked: false,
+			},
+			{ value: "Infinix", label: "Infinix", checked: false },
+			{ value: "HP Pavillion", label: "HP Pavillion", checked: false },
+			{
+				value: "Impression of Acqua Di Gio",
+				label: "Impression of Acqua Di Gio",
+				checked: false,
+			},
+			{ value: "Royal Mirage", label: "Royal Mirage", checked: false },
+			{
+				value: "Fog Scent Xpressio",
+				label: "Fog Scent Xpressio",
+				checked: false,
+			},
 		],
 	},
 	{
