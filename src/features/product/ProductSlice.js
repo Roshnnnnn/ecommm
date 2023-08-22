@@ -3,6 +3,8 @@ import { fetchAllProducts, fetchProductByFilters } from "./ProductAPI";
 
 const initialState = {
 	products: [],
+	brand: [],
+	categories: [],
 	status: "idle",
 };
 
@@ -16,7 +18,7 @@ export const fetchAllProductsAsync = createAsyncThunk(
 
 export const fetchProductByFiltersAsync = createAsyncThunk(
 	"product/fetchProductByFilters",
-	async (filter) => {
+	async ({ filter, sort, pagination, admin }) => {
 		const response = await fetchProductByFilters(filter);
 		return response.data;
 	}
