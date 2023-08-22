@@ -40,11 +40,12 @@ const filters = [
 		id: "category",
 		name: "Category",
 		options: [
-			{ value: "new-arrivals", label: "New Arrivals", checked: false },
-			{ value: "sale", label: "Sale", checked: false },
-			{ value: "travel", label: "Travel", checked: true },
-			{ value: "organization", label: "Organization", checked: false },
-			{ value: "accessories", label: "Accessories", checked: false },
+			{ value: "smartphones", label: "smartphones", checked: false },
+			{ value: "laptop", label: "laptop", checked: false },
+			{ value: "fragrances", label: "fragrances", checked: true },
+			{ value: "skincare", label: "skincare", checked: false },
+			{ value: "groceries", label: "groceries", checked: false },
+			{ value: "home-decoration", label: "home decoration", checked: false },
 		],
 	},
 	{
