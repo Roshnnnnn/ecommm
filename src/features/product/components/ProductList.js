@@ -102,7 +102,7 @@ export default function Product() {
 		};
 		setFilter(newFilter);
 		dispatch(fetchProductByFiltersAsync(newFilter));
-		console.log(section.id, option.value);
+		// console.log(section.id, option.value);
 	};
 
 	useEffect(() => {
