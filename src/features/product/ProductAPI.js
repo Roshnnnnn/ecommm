@@ -8,7 +8,7 @@ export function fetchAllProducts() {
 
 export function fetchProductByFilters(filter) {
 	// filter= {"category":"smartphone"}
-	let queryString = " ";
+	let queryString = "";
 	for (let key in filter) {
 		queryString += `${key}=${filter[key]}&`;
 	}

@@ -1921,9 +1921,17 @@ const products = [
 	},
 ];
 
-const brands = [...new Set([...products.map((p) => p.category)])];
+// const brands = [...new Set([...products.map((p) => p.category)])];
 
-brands.map((c) => ({
+// brands.map((c) => ({
+// 	value: c,
+// 	label: c.split("-").join(" "),
+// 	checked: false,
+// }));
+
+const brand = [...new Set([...products.map((p) => p.brand)])];
+
+brand.map((c) => ({
 	value: c,
 	label: c.split("-").join(" "),
 	checked: false,
