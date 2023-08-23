@@ -39,14 +39,14 @@ export const ProductSlice = createSlice({
 			})
 			.addCase(fetchAllProductsAsync.fulfilled, (state, action) => {
 				state.status = "idle";
-				state.products.push(...action.payload);
+				state.products = action.payload;
 			})
 			.addCase(fetchProductByFiltersAsync.pending, (state) => {
 				state.status = "loading";
 			})
 			.addCase(fetchProductByFiltersAsync.fulfilled, (state, action) => {
 				state.status = "idle";
-				state.products.push(...action.payload);
+				state.products = action.payload;
 			});
 	},
 });

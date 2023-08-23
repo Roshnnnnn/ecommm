@@ -89,7 +89,17 @@ export default function Product() {
 	const products = useSelector(selectAllProducts);
 
 	const handleFilter = (e, section, option) => {
-		const newFilter = { ...filter, [section.id]: option.value };
+		const updatedOption = {
+			...option,
+			checked: e.target.checked,
+		};
+
+		const newFilter = {
+			...filter,
+			[section.id]: section.options.map((opt) =>
+				opt.value === option.value ? updatedOption : opt
+			),
+		};
 		setFilter(newFilter);
 		dispatch(fetchProductByFiltersAsync(newFilter));
 		console.log(section.id, option.value);
