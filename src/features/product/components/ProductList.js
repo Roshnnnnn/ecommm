@@ -40,7 +40,6 @@ const filters = [
 		id: "category",
 		name: "Category",
 		options: [
-			{ value: "all", label: "all", checked: true },
 			{ value: "smartphones", label: "smartphones", checked: false },
 			{ value: "laptop", label: "laptop", checked: false },
 			{ value: "fragrances", label: "fragrances", checked: false },
@@ -66,7 +65,7 @@ const filters = [
 		id: "brand",
 		name: "Brands",
 		options: [
-			{ value: "Apple", label: "Apple", checked: true },
+			{ value: "Apple", label: "Apple", checked: false },
 			{ value: "Samsung", label: "Samsung", checked: false },
 			{ value: "Oppo", label: "Oppo", checked: false },
 			{ value: "Huawei", label: "Huawei", checked: false },

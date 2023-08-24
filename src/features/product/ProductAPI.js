@@ -14,7 +14,7 @@ export function fetchProductByFilters(filter) {
 	}
 	return new Promise(async (resolve) => {
 		const response = await fetch(
-			"http://localhost:8080/product?" + queryString
+			"http://localhost:8080/products?" + queryString
 		);
 		const data = await response.json();
 		resolve({ data });
