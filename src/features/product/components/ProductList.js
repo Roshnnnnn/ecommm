@@ -220,11 +220,11 @@ export default function Product() {
 		console.log(section.id, option.value);
 	};
 
-	// const handleSort = (e, option) => {
-	// 	const newFilter = { ...filter, _sort: option.sort, _order: option.order };
-	// 	setFilter(newFilter);
-	// 	dispatch(fetchProductByFiltersAsync(newFilter));
-	// };
+	const handleSort = (e, option) => {
+		const newFilter = { ...filter, _sort: option.sort, _order: option.order };
+		setFilter(newFilter);
+		dispatch(fetchProductByFiltersAsync(newFilter));
+	};
 
 	return (
 		<div>
@@ -375,7 +375,7 @@ export default function Product() {
 													<Menu.Item key={option.name}>
 														{({ active }) => (
 															<p
-																// onClick={(e) => handleSort(e, option)}
+																onClick={(e) => handleSort(e, option)}
 																className={classNames(
 																	option.current
 																		? "font-medium text-gray-900"
