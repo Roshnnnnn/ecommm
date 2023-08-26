@@ -242,8 +242,9 @@ export default function Product() {
 																				defaultValue={option.value}
 																				type="checkbox"
 																				defaultChecked={option.checked}
-																				onClick={(e) =>
-																					handleFilter(e, section, option)
+																				onChange={(e) =>
+																					// handleFilter(e, section, option)
+																					console.log(e)
 																				}
 																				className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
 																			/>
