@@ -209,26 +209,16 @@ export default function Product() {
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 	const products = useSelector(selectAllProducts);
 
-	const handleFilter = (e, section, option) => {
-		const updatedOption = {
-			...option,
-			checked: e.target.checked,
-		};
-
-		const newFilter = {
-			...filter,
-			[section.id]: section.options.map((opt) =>
-				opt.value === option.value ? updatedOption : opt
-			),
-		};
-		setFilter(newFilter);
-		dispatch(fetchProductByFiltersAsync(newFilter));
-		// console.log(section.id, option.value);
-	};
-
 	useEffect(() => {
 		dispatch(fetchAllProductsAsync());
 	}, [dispatch]);
+
+	const handleFilter = (e, section, option) => {
+		const newFilter = { ...filter, [section.id]: option.value };
+		setFilter(newFilter);
+		dispatch(fetchProductByFiltersAsync(newFilter));
+		console.log(section.id, option.value);
+	};
 
 	return (
 		<div>
@@ -321,11 +311,8 @@ export default function Product() {
 																				name={`${section.id}[]`}
 																				defaultValue={option.value}
 																				type="checkbox"
+																				// onChange={(e) => console.log(e)}
 																				defaultChecked={option.checked}
-																				onChange={(e) =>
-																					// handleFilter(e, section, option)
-																					console.log(e)
-																				}
 																				className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
 																			/>
 																			<label
@@ -469,6 +456,9 @@ export default function Product() {
 																		name={`${section.id}[]`}
 																		defaultValue={option.value}
 																		type="checkbox"
+																		onChange={(e) =>
+																			handleFilter(e, section, option)
+																		}
 																		defaultChecked={option.checked}
 																		className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
 																	/>
