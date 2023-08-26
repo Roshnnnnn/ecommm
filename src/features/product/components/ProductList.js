@@ -220,6 +220,12 @@ export default function Product() {
 		console.log(section.id, option.value);
 	};
 
+	// const handleSort = (e, option) => {
+	// 	const newFilter = { ...filter, _sort: option.sort, _order: option.order };
+	// 	setFilter(newFilter);
+	// 	dispatch(fetchProductByFiltersAsync(newFilter));
+	// };
+
 	return (
 		<div>
 			<div className="bg-white">
@@ -368,8 +374,8 @@ export default function Product() {
 												{sortOptions.map((option) => (
 													<Menu.Item key={option.name}>
 														{({ active }) => (
-															<Link
-																to={option.to}
+															<p
+																// onClick={(e) => handleSort(e, option)}
 																className={classNames(
 																	option.current
 																		? "font-medium text-gray-900"
@@ -379,7 +385,7 @@ export default function Product() {
 																)}
 															>
 																{option.name}
-															</Link>
+															</p>
 														)}
 													</Menu.Item>
 												))}
