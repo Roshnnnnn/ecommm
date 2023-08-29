@@ -23,13 +23,13 @@ const sortOptions = [
 	{ name: "Best Rating", sort: "rating", order: "desc", current: false },
 	{
 		name: "Price: Low to High",
-		sort: "discountPrice",
+		sort: "price",
 		order: "asc",
 		current: false,
 	},
 	{
 		name: "Price: High to Low",
-		sort: "discountPrice",
+		sort: "price",
 		order: "desc",
 		current: false,
 	},
@@ -224,6 +224,7 @@ export default function Product() {
 		const newFilter = { ...filter, _sort: option.sort, _order: option.order };
 		setFilter(newFilter);
 		dispatch(fetchProductByFiltersAsync(newFilter));
+		console.log(option);
 	};
 
 	return (
