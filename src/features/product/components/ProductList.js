@@ -41,7 +41,7 @@ const filters = [
 		name: "Category",
 		options: [
 			{ value: "smartphones", label: "smartphones", checked: false },
-			{ value: "laptop", label: "laptop", checked: false },
+			{ value: "laptops", label: "laptops", checked: false },
 			{ value: "fragrances", label: "fragrances", checked: false },
 			{ value: "skincare", label: "skincare", checked: false },
 			{ value: "groceries", label: "groceries", checked: false },
