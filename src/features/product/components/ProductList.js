@@ -209,14 +209,16 @@ export default function Product() {
 	const products = useSelector(selectAllProducts);
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-	useEffect(() => {
-		dispatch(fetchAllProductsAsync());
-	}, [dispatch]);
-
 	const handleFilter = (e, section, option) => {
-		const newFilter = { ...filter, [section.id]: option.value };
+		const newFilter = { ...filter };
+		if (e.target.checked) {
+			newFilter[section.id] = option.value;
+		} else {
+			delete newFilter[section.id];
+		}
+
 		setFilter(newFilter);
-		dispatch(fetchProductByFiltersAsync(newFilter));
+		// dispatch(fetchProductByFiltersAsync(newFilter));
 		console.log(section.id, option.value);
 	};
 
@@ -227,6 +229,9 @@ export default function Product() {
 		console.log(option);
 	};
 
+	useEffect(() => {
+		dispatch(fetchProductByFiltersAsync(filter));
+	}, [dispatch, filter]);
 	return (
 		<div>
 			<div className="bg-white">
