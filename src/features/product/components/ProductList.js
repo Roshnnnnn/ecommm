@@ -50,9 +50,10 @@ const filters = [
 			{ value: "tops", label: "tops", checked: false },
 			{ value: "womens-dresses", label: "womens dresses", checked: false },
 			{ value: "womens-shoes", label: "womens shoes", checked: false },
-			{ value: "mens-shirt", label: "mens shirt", checked: false },
+			{ value: "mens-shirts", label: "mens shirts", checked: false },
 			{ value: "mens-shoes", label: "mens shoes", checked: false },
 			{ value: "mens-watches", label: "mens watches", checked: false },
+			{ value: "womens-watches", label: "womens watches", checked: false },
 			{ value: "womens-bags", label: "womens bags", checked: false },
 			{ value: "womens-jewellery", label: "womens jewellery", checked: false },
 			{ value: "sunglasses", label: "sunglasses", checked: false },
@@ -206,32 +207,39 @@ function classNames(...classes) {
 export default function Product() {
 	const dispatch = useDispatch();
 	const [filter, setFilter] = useState({});
+	const [sort, setSort] = useState({});
 	const products = useSelector(selectAllProducts);
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
 	const handleFilter = (e, section, option) => {
+		console.log(e.target.checked);
 		const newFilter = { ...filter };
 		if (e.target.checked) {
-			newFilter[section.id] = option.value;
+			if (newFilter[section.id]) {
+				newFilter[section.id].push(option.value);
+			} else {
+				newFilter[section.id] = [option.value];
+			}
 		} else {
-			delete newFilter[section.id];
+			const index = newFilter[section.id].findIndex(
+				(el) => el === option.value
+			);
+			newFilter[section.id].splice(index, 1);
 		}
+		console.log({ newFilter });
 
 		setFilter(newFilter);
-		// dispatch(fetchProductByFiltersAsync(newFilter));
-		console.log(section.id, option.value);
 	};
 
 	const handleSort = (e, option) => {
-		const newFilter = { ...filter, _sort: option.sort, _order: option.order };
-		setFilter(newFilter);
-		dispatch(fetchProductByFiltersAsync(newFilter));
-		console.log(option);
+		const sort = { _sort: option.sort, _order: option.order };
+		setSort(sort);
+		console.log({ sort });
 	};
 
 	useEffect(() => {
-		dispatch(fetchProductByFiltersAsync(filter));
-	}, [dispatch, filter]);
+		dispatch(fetchProductByFiltersAsync({ filter, sort }));
+	}, [dispatch, filter, sort]);
 	return (
 		<div>
 			<div className="bg-white">
