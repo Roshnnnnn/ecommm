@@ -6,7 +6,7 @@ export function fetchAllProducts() {
 	});
 }
 
-export function fetchProductByFilters(filter, sort) {
+export function fetchProductByFilters(filter, sort, pagination) {
 	// filter= {"category":"smartphone"}
 	let queryString = "";
 	for (let key in filter) {
@@ -17,6 +17,9 @@ export function fetchProductByFilters(filter, sort) {
 	}
 	for (let key in sort) {
 		queryString += `${key}=${sort[key]}&`;
+	}
+	for (let key in pagination) {
+		queryString += `${key}=${pagination[key]}&`;
 	}
 
 	return new Promise(async (resolve) => {
