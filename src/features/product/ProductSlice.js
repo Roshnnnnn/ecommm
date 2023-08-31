@@ -6,6 +6,7 @@ const initialState = {
 	brand: [],
 	categories: [],
 	status: "idle",
+	totalItems: 0,
 };
 
 export const fetchAllProductsAsync = createAsyncThunk(
@@ -46,7 +47,8 @@ export const ProductSlice = createSlice({
 			})
 			.addCase(fetchProductByFiltersAsync.fulfilled, (state, action) => {
 				state.status = "idle";
-				state.products = action.payload;
+				state.products = action.payload.products;
+				state.totalItems = action.payload.totalItems;
 			});
 	},
 });
