@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {
 	fetchAllProductsAsync,
 	selectAllProducts,
+	selectTotalItems,
 	fetchProductByFiltersAsync,
 } from "../ProductSlice";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
@@ -211,6 +212,7 @@ export default function Product() {
 	const [sort, setSort] = useState({});
 	const [page, setPage] = useState(1);
 	const products = useSelector(selectAllProducts);
+	const totalItems = useSelector(selectTotalItems);
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
 	const handleFilter = (e, section, option) => {
@@ -248,6 +250,11 @@ export default function Product() {
 		const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
 		dispatch(fetchProductByFiltersAsync({ filter, sort, pagination }));
 	}, [dispatch, filter, sort, page]);
+
+	useEffect(() => {
+		setPage(1);
+	}, [totalItems, sort]);
+
 	return (
 		<div>
 			<div className="bg-white">
@@ -368,6 +375,7 @@ export default function Product() {
 								page={page}
 								setPage={setPage}
 								handlePage={handlePage}
+								totalItems={totalItems}
 							/>
 						</div>
 					</main>
@@ -563,15 +571,20 @@ const DesktopFilter = ({
 	);
 };
 
-const Pagination = ({ handlePage, page, setPage, totalItems = 55 }) => {
+const Pagination = ({ handlePage, page, setPage, totalItems }) => {
 	return (
 		<div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
 			<div>
 				<p className="text-sm text-gray-700">
 					Showing{" "}
 					<span className="font-medium">{(page - 1) * ITEMS_PER_PAGE + 1}</span>{" "}
-					to <span className="font-medium">{page * ITEMS_PER_PAGE}</span> of{" "}
-					<span className="font-medium">{totalItems}</span> results
+					to{" "}
+					<span className="font-medium">
+						{page * ITEMS_PER_PAGE > totalItems
+							? totalItems
+							: page * ITEMS_PER_PAGE}
+					</span>{" "}
+					of <span className="font-medium">{totalItems}</span> results
 				</p>
 			</div>
 			<div>
