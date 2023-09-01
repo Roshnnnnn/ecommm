@@ -6,6 +6,10 @@ import {
 	selectAllProducts,
 	selectTotalItems,
 	fetchProductByFiltersAsync,
+	selectBrands,
+	selectCategories,
+	fetchBrandsAsync,
+	fetchCategoriesAsync,
 } from "../ProductSlice";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
@@ -208,12 +212,26 @@ function classNames(...classes) {
 
 export default function Product() {
 	const dispatch = useDispatch();
+	const products = useSelector(selectAllProducts);
+	const brands = useSelector(selectBrands);
+	const categories = useSelector(selectCategories);
+	const totalItems = useSelector(selectTotalItems);
 	const [filter, setFilter] = useState({});
 	const [sort, setSort] = useState({});
 	const [page, setPage] = useState(1);
-	const products = useSelector(selectAllProducts);
-	const totalItems = useSelector(selectTotalItems);
 	const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+	const filters = [
+		{
+			id: "category",
+			name: "Category",
+			options: categories,
+		},
+		{
+			id: "brand",
+			name: "Brands",
+			options: brands,
+		},
+	];
 
 	const handleFilter = (e, section, option) => {
 		console.log(e.target.checked);
@@ -255,6 +273,11 @@ export default function Product() {
 		setPage(1);
 	}, [totalItems, sort]);
 
+	useEffect(() => {
+		dispatch(fetchBrandsAsync());
+		dispatch(fetchCategoriesAsync());
+	}, []);
+
 	return (
 		<div>
 			<div className="bg-white">
@@ -263,6 +286,7 @@ export default function Product() {
 						handleFilter={handleFilter}
 						mobileFiltersOpen={mobileFiltersOpen}
 						setMobileFiltersOpen={setMobileFiltersOpen}
+						filters={filters}
 					/>
 
 					<main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -346,6 +370,7 @@ export default function Product() {
 									handleFilter={handleFilter}
 									mobileFiltersOpen={mobileFiltersOpen}
 									setMobileFiltersOpen={setMobileFiltersOpen}
+									filters={filters}
 								/>
 
 								{/* Product grid */}
@@ -357,7 +382,7 @@ export default function Product() {
 						</section>
 						{/* section of product and filters ends here */}
 						<div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
-							<div className="flex flex-1 justify-between sm:hidden">
+							{/* <div className="flex flex-1 justify-between sm:hidden">
 								<Link
 									to="#"
 									className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
@@ -370,7 +395,7 @@ export default function Product() {
 								>
 									Next
 								</Link>
-							</div>
+							</div> */}
 							<Pagination
 								page={page}
 								setPage={setPage}
@@ -389,6 +414,7 @@ const MobileFilter = ({
 	mobileFiltersOpen,
 	setMobileFiltersOpen,
 	handleFilter,
+	filters,
 }) => {
 	return (
 		<div>
@@ -510,6 +536,7 @@ const DesktopFilter = ({
 	handleFilter,
 	mobileFiltersOpen,
 	setMobileFiltersOpen,
+	filters,
 }) => {
 	return (
 		<div>
@@ -572,36 +599,57 @@ const DesktopFilter = ({
 };
 
 const Pagination = ({ handlePage, page, setPage, totalItems }) => {
+	const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 	return (
-		<div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
-			<div>
-				<p className="text-sm text-gray-700">
-					Showing{" "}
-					<span className="font-medium">{(page - 1) * ITEMS_PER_PAGE + 1}</span>{" "}
-					to{" "}
-					<span className="font-medium">
-						{page * ITEMS_PER_PAGE > totalItems
-							? totalItems
-							: page * ITEMS_PER_PAGE}
-					</span>{" "}
-					of <span className="font-medium">{totalItems}</span> results
-				</p>
-			</div>
-			<div>
-				<nav
-					className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-					aria-label="Pagination"
+		<div>
+			<div className="flex flex-1 justify-between sm:hidden">
+				<div
+					onClick={(e) => handlePage(page > 1 ? page - 1 : page)}
+					className="relative cursor-pointer inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
 				>
-					<Link
-						to="#"
-						className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+					Previous
+				</div>
+				<div
+					onClick={(e) => handlePage(page < totalPages ? page + 1 : page)}
+					className="relative ml-3 cursor-pointer inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+				>
+					Next
+				</div>
+			</div>
+			<div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+				<div>
+					<p className="text-sm text-gray-700">
+						Showing{" "}
+						<span className="font-medium">
+							{(page - 1) * ITEMS_PER_PAGE + 1}
+						</span>{" "}
+						to{" "}
+						<span className="font-medium">
+							{page * ITEMS_PER_PAGE > totalItems
+								? totalItems
+								: page * ITEMS_PER_PAGE}
+						</span>{" "}
+						of <span className="font-medium">{totalItems}</span> results
+					</p>
+				</div>
+				<div>
+					<nav
+						className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+						aria-label="Pagination"
 					>
-						<span className="sr-only">Previous</span>
-						<ChevronLeftIcon className="h-5 w-5" aria-hidden="true" />
-					</Link>
-					{/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
-					{Array.from({ length: Math.ceil(totalItems / ITEMS_PER_PAGE) }).map(
-						(el, index) => (
+						<Link
+							to="#"
+							className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+						>
+							<span className="sr-only">Previous</span>
+							<ChevronLeftIcon
+								onClick={(e) => handlePage(page > 1 ? page - 1 : page)}
+								className="h-5 w-5"
+								aria-hidden="true"
+							/>
+						</Link>
+						{/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
+						{Array.from({ length: totalPages }).map((el, index) => (
 							<div
 								onClick={(e) => handlePage(index + 1)}
 								aria-current="page"
@@ -613,16 +661,20 @@ const Pagination = ({ handlePage, page, setPage, totalItems }) => {
 							>
 								{index + 1}
 							</div>
-						)
-					)}
-					<Link
-						to="#"
-						className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-					>
-						<span className="sr-only">Next</span>
-						<ChevronRightIcon className="h-5 w-5" aria-hidden="true" />
-					</Link>
-				</nav>
+						))}
+						<Link
+							to="#"
+							className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
+						>
+							<span className="sr-only">Next</span>
+							<ChevronRightIcon
+								onClick={(e) => handlePage(page < totalPages ? page + 1 : page)}
+								className="h-5 w-5"
+								aria-hidden="true"
+							/>
+						</Link>
+					</nav>
+				</div>
 			</div>
 		</div>
 	);
