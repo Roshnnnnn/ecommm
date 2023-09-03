@@ -40,18 +40,18 @@ export const fetchProductByFiltersAsync = createAsyncThunk(
 	}
 );
 
-export const fetchBrandsAsync = createAsyncThunk(
-	"product/fetchBrands",
-	async () => {
-		const response = await fetchBrands();
-		return response.data;
-	}
-);
-
 export const fetchCategoriesAsync = createAsyncThunk(
 	"product/fetchCategories",
 	async () => {
 		const response = await fetchCategories();
+		return response.data;
+	}
+);
+
+export const fetchBrandsAsync = createAsyncThunk(
+	"product/fetchBrands",
+	async () => {
+		const response = await fetchBrands();
 		return response.data;
 	}
 );
@@ -108,9 +108,9 @@ export const ProductSlice = createSlice({
 export const { increment } = ProductSlice.actions;
 
 export const selectAllProducts = (state) => state.product.products;
+export const selectTotalItems = (state) => state.product.totalItems;
 export const selectCategories = (state) => state.product.categories;
 export const selectBrands = (state) => state.product.brands;
-export const selectTotalItems = (state) => state.product.totalItems;
 export const selectProductById = (state) => state.product.selectedProduct;
 
 export default ProductSlice.reducer;

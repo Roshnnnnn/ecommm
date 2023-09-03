@@ -2,15 +2,15 @@ import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-	fetchAllProductsAsync,
-	selectAllProducts,
-	selectTotalItems,
-	fetchProductByFiltersAsync,
-	selectBrands,
-	selectCategories,
 	fetchBrandsAsync,
 	fetchCategoriesAsync,
-} from "../ProductSlice";
+	fetchProductByFiltersAsync,
+	selectAllProducts,
+	selectBrands,
+	selectCategories,
+	selectProductListStatus,
+	selectTotalItems,
+} from "../ProductSlice.js";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
@@ -381,7 +381,6 @@ export default function Product() {
 							</div>
 						</section>
 						{/* section of product and filters ends here */}
-						{/* <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"></div> */}
 						<Pagination
 							page={page}
 							setPage={setPage}

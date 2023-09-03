@@ -6,7 +6,7 @@ import {
 	fetchProductByIdAsync,
 	selectProductById,
 	selectProductListStatus,
-} from "../productSlice";
+} from "../ProductSlice";
 import { useParams } from "react-router-dom";
 
 const colors = [
