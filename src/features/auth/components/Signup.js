@@ -8,9 +8,9 @@ export default function Login() {
 	const {
 		register,
 		handleSubmit,
-		watch,
 		formState: { errors },
 	} = useForm();
+
 	const dispatch = useDispatch();
 	const user = useSelector(selectLoggedInUser);
 

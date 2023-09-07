@@ -6,7 +6,25 @@ export function createUser(userData) {
 			body: JSON.stringify(userData),
 			headers: { "content-type": "application/json" },
 		});
-		const result = await response.json();
-		resolve({ result });
+		const data = await response.json();
+		resolve({ data });
+	});
+}
+
+export function checkUser(loginInfo) {
+	return new Promise(async (resolve, reject) => {
+		const email = loginInfo.email;
+		const password = loginInfo.password;
+		const response = await fetch("https://localhost:8080/users?email=" + email);
+		const data = await response.json();
+		if (data.length) {
+			if (password === data[0].password) {
+				resolve({ data });
+			} else {
+				reject({ message: "wrong passsword" });
+			}
+		} else {
+			reject({ message: "user not found" });
+		}
 	});
 }

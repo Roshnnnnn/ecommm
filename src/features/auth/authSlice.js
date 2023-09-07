@@ -14,6 +14,14 @@ export const createUserAsync = createAsyncThunk(
 	}
 );
 
+export const checkUserAsync = createAsyncThunk(
+	"counter/createUser",
+	async (loginInfo) => {
+		const response = await checkUserAsync(loginInfo);
+		return response.data;
+	}
+);
+
 export const counterSlice = createSlice({
 	name: "user",
 	initialState,
@@ -34,6 +42,17 @@ export const counterSlice = createSlice({
 			.addCase(createUserAsync.fulfilled, (state, action) => {
 				state.status = "idle";
 				state.loggedInUser = action.payload;
+			})
+			.addCase(checkUserAsync.pending, (state) => {
+				state.status = "loading";
+			})
+			.addCase(checkUserAsync.fulfilled, (state, action) => {
+				state.status = "idle";
+				state.loggedInUser = action.payload;
+			})
+			.addCase(checkUserAsync.rejected, (state, action) => {
+				state.status = "idle";
+				state.errors = action.errors;
 			});
 	},
 });
