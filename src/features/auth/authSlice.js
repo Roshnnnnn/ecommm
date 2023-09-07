@@ -5,9 +5,6 @@ const initialState = {
 	loggedInUser: null,
 	status: "idle",
 	error: null,
-	userChecked: false,
-	mailSent: false,
-	passwordReset: false,
 };
 
 export const createUserAsync = createAsyncThunk(

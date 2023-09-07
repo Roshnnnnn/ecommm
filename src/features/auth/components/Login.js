@@ -13,6 +13,7 @@ export default function Login() {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+
 	console.log(errors);
 
 	return (
@@ -32,6 +33,7 @@ export default function Login() {
 
 				<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 					<form
+						noValidate
 						onSubmit={handleSubmit((data) => {
 							dispatch();
 							checkUserAsync({ email: data.email, password: data.password });
@@ -63,6 +65,7 @@ export default function Login() {
 									<p className="text-red-500">{errors.email.message}</p>
 								)}
 							</div>
+							{error && <p className="text-red-500">{error.message}</p>}
 						</div>
 
 						<div>
@@ -87,13 +90,6 @@ export default function Login() {
 									id="password"
 									{...register("password", {
 										required: "password is required",
-										pattern: {
-											value:
-												/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
-											message: `- at least 8 characters\n
-                      - must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number\n
-                      - Can contain special characters`,
-										},
 									})}
 									type="password"
 									autoComplete="current-password"

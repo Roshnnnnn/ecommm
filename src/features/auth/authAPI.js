@@ -20,7 +20,7 @@ export function checkUser(loginInfo) {
 		console.log({ data });
 		if (data.length) {
 			if (password === data[0].password) {
-				resolve({ data });
+				resolve({ data: data[0] });
 			} else {
 				reject({ message: "wrong passsword" });
 			}
