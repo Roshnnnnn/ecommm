@@ -12,7 +12,7 @@ export default function Login() {
 		formState: { errors },
 	} = useForm();
 	const dispatch = useDispatch();
-	const user = useSelector(selectLoggedInUser);
+	// const user = useSelector(selectLoggedInUser);
 
 	console.log(errors);
 
