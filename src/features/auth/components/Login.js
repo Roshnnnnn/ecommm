@@ -32,7 +32,6 @@ export default function Login() {
 
 				<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 					<form
-						noValidate
 						onSubmit={handleSubmit((data) => {
 							dispatch();
 							checkUserAsync({ email: data.email, password: data.password });
