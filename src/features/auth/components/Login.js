@@ -13,11 +13,11 @@ export default function Login() {
 		formState: { errors },
 	} = useForm();
 
-	console.log(errors);
+	// console.log(errors);
 
 	return (
 		<div>
-			{user && <Navigate to={"/"} replace={true} />}
+			{user && <Navigate to="/" replace={true}></Navigate>}
 			<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 				<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 					<img
@@ -32,7 +32,6 @@ export default function Login() {
 
 				<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 					<form
-						noValidate
 						onSubmit={handleSubmit((data) => {
 							dispatch(
 								checkUserAsync({ email: data.email, password: data.password })

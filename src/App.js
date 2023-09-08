@@ -18,11 +18,7 @@ import Protected from "./features/auth/components/Protected";
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: (
-			<Protected>
-				<Home />
-			</Protected>
-		),
+		element: <Home />,
 	},
 	{
 		path: "/login",
