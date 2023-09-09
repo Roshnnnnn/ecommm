@@ -22,7 +22,7 @@ export function checkUser(loginInfo) {
 			if (password === data[0].password) {
 				resolve({ data: data[0] });
 			} else {
-				reject({ message: "wrong passsword" });
+				reject({ message: "User not found" });
 			}
 		} else {
 			reject({ message: "user not found" });
