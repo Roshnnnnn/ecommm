@@ -1,27 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchCount } from "./cartAPI";
+import { addToCart } from "./cartAPI";
 
 const initialState = {
 	value: 0,
-	status: "idle",
+	items: [],
 };
 
 export const addToCartAsync = createAsyncThunk(
-	"counter/addToCart",
-	async (amount) => {
-		const response = await fetchCount(amount);
+	"cart/addToCart",
+	async (item) => {
+		const response = await addToCart(item);
 		return response.data;
 	}
 );
 
 export const counterSlice = createSlice({
-	name: "counter",
+	name: "cart",
 	initialState,
-	reducers: {
-		increment: (state) => {
-			state.value += 1;
-		},
-	},
+	reducers: {},
 	extraReducers: (builder) => {
 		builder
 			.addCase(addToCartAsync.pending, (state) => {
@@ -29,7 +25,7 @@ export const counterSlice = createSlice({
 			})
 			.addCase(addToCartAsync.fulfilled, (state, action) => {
 				state.status = "idle";
-				state.value = action.payload;
+				state.items.push(action.payload);
 			});
 	},
 });
