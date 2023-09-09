@@ -6,8 +6,8 @@ const initialState = {
 	status: "idle",
 };
 
-export const incrementAsync = createAsyncThunk(
-	"counter/fetchCount",
+export const addToCartAsync = createAsyncThunk(
+	"counter/addToCart",
 	async (amount) => {
 		const response = await fetchCount(amount);
 		return response.data;
@@ -21,19 +21,15 @@ export const counterSlice = createSlice({
 		increment: (state) => {
 			state.value += 1;
 		},
-
-		incrementByAmount: (state, action) => {
-			state.value += action.payload;
-		},
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(incrementAsync.pending, (state) => {
+			.addCase(addToCartAsync.pending, (state) => {
 				state.status = "loading";
 			})
-			.addCase(incrementAsync.fulfilled, (state, action) => {
+			.addCase(addToCartAsync.fulfilled, (state, action) => {
 				state.status = "idle";
-				state.value += action.payload;
+				state.value = action.payload;
 			});
 	},
 });
