@@ -2,8 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { addToCart } from "./cartAPI";
 
 const initialState = {
-	value: 0,
+	status: "idle",
 	items: [],
+	cartLoaded: false,
 };
 
 export const addToCartAsync = createAsyncThunk(
@@ -32,6 +33,6 @@ export const counterSlice = createSlice({
 
 export const { increment } = counterSlice.actions;
 
-export const selectCount = (state) => state.counter.value;
+export const selectItems = (state) => state.cart.value;
 
 export default counterSlice.reducer;
