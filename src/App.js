@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import Home from "./pages/Home";
-import { createRoot } from "react-dom/client";
 import {
 	createBrowserRouter,
 	RouterProvider,
@@ -21,7 +20,11 @@ import { selectLoggedInUser } from "./features/auth/authSlice";
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Home />,
+		element: (
+			<Protected>
+				<Home />
+			</Protected>
+		),
 	},
 	{
 		path: "/login",
@@ -61,7 +64,7 @@ function App() {
 		if (user) {
 			dispatch(fetchItemsByUserIdAsync(user.id));
 		}
-	}, [dispatch]);
+	}, [dispatch, user]);
 
 	return (
 		<div className="App">
