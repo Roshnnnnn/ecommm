@@ -53,8 +53,8 @@ export default function ProductDetail() {
 	};
 
 	useEffect(() => {
-		dispatch(fetchProductByIdAsync(params.id));
-	}, [dispatch, params.id]);
+		dispatch(fetchProductByIdAsync(user.id));
+	}, [dispatch, user.id]);
 
 	return (
 		<div className="bg-white">
