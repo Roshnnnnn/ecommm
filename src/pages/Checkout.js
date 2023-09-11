@@ -10,6 +10,12 @@ import { useForm } from "react-hook-form";
 
 const Checkout = () => {
 	const dispatch = useDispatch();
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
 	const items = useSelector(selectItems);
 
 	const totalAmount = items.reduce(
