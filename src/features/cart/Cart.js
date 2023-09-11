@@ -4,7 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
-import { selectItems, updateCartAsync } from "./cartSlice";
+import {
+	deleteItemFromCartAsync,
+	selectItems,
+	updateCartAsync,
+} from "./cartSlice";
 
 const Cart = () => {
 	const dispatch = useDispatch();
@@ -18,6 +22,10 @@ const Cart = () => {
 
 	const handleQuantity = (e, item) => {
 		dispatch(updateCartAsync({ ...item, quantity: +e.target.value }));
+	};
+
+	const handleRemove = (e, id) => {
+		dispatch(deleteItemFromCartAsync(id));
 	};
 
 	return (
@@ -70,12 +78,13 @@ const Cart = () => {
 											</div>
 
 											<div className="flex">
-												<Link
+												<button
+													onClick={(e) => handleRemove(e, item.id)}
 													type="button"
 													className="font-medium text-indigo-600 hover:text-indigo-500"
 												>
 													Remove
-												</Link>
+												</button>
 											</div>
 										</div>
 									</div>
