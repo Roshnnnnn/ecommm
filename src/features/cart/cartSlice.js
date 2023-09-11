@@ -24,7 +24,7 @@ export const fetchItemsByUserIdAsync = createAsyncThunk(
 );
 
 export const updateCartAsync = createAsyncThunk(
-	"cart/addToCart",
+	"cart/updateCart",
 	async (update) => {
 		const response = await updateCart(update);
 		return response.data;
@@ -55,8 +55,9 @@ export const counterSlice = createSlice({
 				state.status = "loading";
 			})
 			.addCase(updateCartAsync.fulfilled, (state, action) => {
+				state.status = "idle";
 				const index = state.items.findIndex(
-					(item) => item.id === action.payload
+					(item) => item.id === action.payload.id
 				);
 				state.items[index] = action.payload;
 			});
