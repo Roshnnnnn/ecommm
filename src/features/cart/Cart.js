@@ -8,7 +8,6 @@ import { selectItems, updateCartAsync } from "./cartSlice";
 
 const Cart = () => {
 	const dispatch = useDispatch();
-	const [open, setOpen] = useState(true);
 	const items = useSelector(selectItems);
 
 	const totalAmount = items.reduce(
@@ -18,7 +17,7 @@ const Cart = () => {
 	const totalItems = items.reduce((total, item) => item.quantity + total, 0);
 
 	const handleQuantity = (e, item) => {
-		dispatch(updateCartAsync({ id: item.id, quantity: +e.target.value }));
+		dispatch(updateCartAsync({ ...item, quantity: +e.target.value }));
 	};
 
 	return (
