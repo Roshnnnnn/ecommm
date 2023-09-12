@@ -35,6 +35,7 @@ const Checkout = () => {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm();
 
@@ -49,8 +50,13 @@ const Checkout = () => {
 							noValidate
 							onSubmit={handleSubmit((data) => {
 								console.log(data);
-								dispatch();
-								// updateUserAsync({ ...user, addresses: [...user.addresses] })
+								dispatch(
+									updateUserAsync({
+										...user,
+										addresses: [...user.addresses, data],
+									})
+								);
+								reset();
 							})}
 						>
 							<div className="space-y-12">
@@ -109,7 +115,7 @@ const Checkout = () => {
 												Phone
 											</label>
 											<input
-												type="tel"
+												type="number"
 												{...register("phone", {
 													required: "phone is required",
 												})}
