@@ -11,6 +11,7 @@ import {
 	selectLoggedInUser,
 	updateUserAsync,
 } from "../features/auth/authSlice";
+import { useState } from "react";
 
 const Checkout = () => {
 	const dispatch = useDispatch();
@@ -29,6 +30,19 @@ const Checkout = () => {
 	const handleRemove = (e, id) => {
 		dispatch(deleteItemFromCartAsync(id));
 	};
+
+	const handleAddress = (e) => {
+		console.log(e.target.value);
+		setSelectedAddress(e.target.value);
+	};
+
+	const handlePayment = (e) => {
+		console.log(e.target.value);
+		setPaymentMethod(user.addresses[e.target.value]);
+	};
+
+	const [selectedAddress, setSelectedAddress] = useState(null);
+	const [paymentMethod, setPaymentMethod] = useState("cash");
 
 	const user = useSelector(selectLoggedInUser);
 
@@ -226,13 +240,15 @@ const Checkout = () => {
 									</p>
 
 									<ul role="list">
-										{user.addresses.map((address) => (
+										{user.addresses.map((address, index) => (
 											<li
-												key={address.email}
+												key={index}
 												className="flex justify-between gap-x-6 py-5 px-5 border-solid border-2 border-gray-200"
 											>
 												<div className="flex min-w-0 gap-x-4">
 													<input
+														onChange={handleAddress}
+														value={index}
 														name="address"
 														type="radio"
 														className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
@@ -274,10 +290,10 @@ const Checkout = () => {
 													<input
 														id="cash"
 														name="payments"
-														// onChange={handlePayment}
+														onChange={handlePayment}
 														value="cash"
 														type="radio"
-														// checked={paymentMethod === "cash"}
+														checked={paymentMethod === "cash"}
 														className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
 													/>
 													<label
@@ -290,9 +306,9 @@ const Checkout = () => {
 												<div className="flex items-center gap-x-3">
 													<input
 														id="card"
-														// onChange={}
+														onChange={handlePayment}
 														name="payments"
-														// checked={paymentMethod === "card"}
+														checked={paymentMethod === "card"}
 														value="card"
 														type="radio"
 														className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
