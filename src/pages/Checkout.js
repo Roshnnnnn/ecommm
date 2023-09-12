@@ -8,14 +8,27 @@ import {
 import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+const addresses = [
+	{
+		name: "Roshan Yadav",
+		street: "G.L 1205",
+		city: "Gwalior",
+		pincode: 474020,
+		state: "Madhya Pradesh",
+		phone: 9893018968,
+	},
+	{
+		name: "Vicky Yadav",
+		street: "G.L 1277",
+		city: "Delhi",
+		pincode: 110022,
+		state: "Delhi",
+		phone: 9098322493,
+	},
+];
+
 const Checkout = () => {
 	const dispatch = useDispatch();
-	const {
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm();
 	const items = useSelector(selectItems);
 
 	const totalAmount = items.reduce(
