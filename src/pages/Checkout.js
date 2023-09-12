@@ -7,7 +7,10 @@ import {
 } from "../features/cart/cartSlice";
 import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { selectLoggedInUser } from "../features/auth/authSlice";
+import {
+	selectLoggedInUser,
+	updateUserAsync,
+} from "../features/auth/authSlice";
 
 const Checkout = () => {
 	const dispatch = useDispatch();
@@ -47,6 +50,7 @@ const Checkout = () => {
 							onSubmit={handleSubmit((data) => {
 								console.log(data);
 								dispatch();
+								// updateUserAsync({ ...user, addresses: [...user.addresses] })
 							})}
 						>
 							<div className="space-y-12">
