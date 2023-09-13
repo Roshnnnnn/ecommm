@@ -12,6 +12,7 @@ import {
 	updateUserAsync,
 } from "../features/auth/authSlice";
 import { useState } from "react";
+import { createOrderAsync } from "../features/order/orderSlice";
 
 const Checkout = () => {
 	const dispatch = useDispatch();
@@ -39,6 +40,12 @@ const Checkout = () => {
 	const handlePayment = (e) => {
 		console.log(e.target.value);
 		setPaymentMethod(user.addresses[e.target.value]);
+	};
+
+	const handleOrder = (e) => {
+		const order = { items, totalAmount, user, paymentMethod, selectedAddress };
+		dispatch(createOrderAsync(order));
+		// setPaymentMethod(e.target.value);
 	};
 
 	const [selectedAddress, setSelectedAddress] = useState(null);
@@ -408,12 +415,12 @@ const Checkout = () => {
 									Shipping and taxes calculated at checkout.
 								</p>
 								<div className="mt-6">
-									<Link
-										to={"/checkout"}
-										className="flex item-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+									<div
+										onClick={handleOrder}
+										className="flex cursor-pointer item-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
 									>
-										Checkout
-									</Link>
+										Order Now
+									</div>
 								</div>
 								<div className="mt-6 flex justify-center text-center text-sm text-gray-500">
 									<p>
