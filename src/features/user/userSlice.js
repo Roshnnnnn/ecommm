@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchLoggedInUserOrders } from "./userAPI";
 
 const initialState = {
-	userOrders: [],
 	status: "idle",
+	userOrders: [],
 };
 
 export const fetchLoggedInUserOrdersAsync = createAsyncThunk(
