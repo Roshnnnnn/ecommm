@@ -4,6 +4,7 @@ import {
 	fetchItemsByUserId,
 	updateCart,
 	deleteItemFromCart,
+	resetCart,
 } from "./cartAPI";
 
 const initialState = {
@@ -40,6 +41,14 @@ export const deleteItemFromCartAsync = createAsyncThunk(
 	"cart/deleteItemFromCart",
 	async (itemId) => {
 		const response = await deleteItemFromCart(itemId);
+		return response.data;
+	}
+);
+
+export const resetCartAsync = createAsyncThunk(
+	"cart/deleteItemFromCart",
+	async (itemId) => {
+		const response = await resetCart(itemId);
 		return response.data;
 	}
 );
