@@ -8,6 +8,10 @@ const UserProfile = () => {
 	const dispatch = useDispatch();
 	const user = useSelector(selectLoggedInUser);
 
+	const handleEdit = () => {};
+
+	const handleRemove = () => {};
+
 	return (
 		<div>
 			<div>
@@ -15,7 +19,7 @@ const UserProfile = () => {
 				<div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
 					<div className="border-t border-gray-200 px-4 py-6 sm:px-6">
 						<h1 className="text-4xl my-5 font-bold tracking-tight text-gray-900">
-							Name :{user.name ? user.name : " Guest"}
+							Name :{user.name ? user.name : "  Guest"}
 						</h1>
 						<h3 className="text-xl my-5 font-bold tracking-tight text-red-600">
 							Email :{user.email}
@@ -44,6 +48,26 @@ const UserProfile = () => {
 										<p className="text-sm leading-6 text-gray-900">
 											Phone: {address.phone}
 										</p>
+										<p className="text-sm leading-6 text-gray-500">
+											{address.city}
+										</p>
+									</div>
+									<div className="hidden sm:flex sm:flex-col sm:items-end">
+										<button
+											onClick={(e) => handleEdit(e, address.id)}
+											type="button"
+											className="font-medium text-indigo-600 hover:text-indigo-500"
+										>
+											Edit
+										</button>
+										<button
+											onClick={(e) => handleRemove(e, address.id)}
+											type="button"
+											className="font-medium text-indigo-600 hover:text-indigo-500"
+										>
+											Remove
+										</button>
+
 										<p className="text-sm leading-6 text-gray-500">
 											{address.city}
 										</p>
