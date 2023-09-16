@@ -7,6 +7,10 @@ const UserProfile = () => {
 	const dispatch = useDispatch();
 	const userInfo = useSelector(selectUserInfo);
 
+	const handleRemove = () => {};
+
+	const handleEdit = () => {};
+
 	return (
 		<div>
 			<div>
@@ -22,7 +26,7 @@ const UserProfile = () => {
 
 					<div className="border-t border-gray-200 px-4 py-6 sm:px-6">
 						<p className="mt-0.5 text-sm text-gray-500">Your Address :</p>
-						{userInfo.addresses.map((address) => (
+						{userInfo.addresses.map((address, index) => (
 							<div className="flex justify-between gap-x-6 px-5 py-5 border-solid border-2 border-gray-200">
 								<div className="flex gap-x-4">
 									<div className="min-w-0 flex-auto">
@@ -41,6 +45,20 @@ const UserProfile = () => {
 									<p className="text-sm leading-6 text-gray-900">
 										Phone: {address.phone}
 									</p>
+									<button
+										onClick={(e) => handleEdit(e, index)}
+										type="button"
+										className="font-medium text-indigo-600 hover:text-indigo-500"
+									>
+										Edit
+									</button>
+									<button
+										onClick={(e) => handleRemove(e, index)}
+										type="button"
+										className="font-medium text-indigo-600 hover:text-indigo-500"
+									>
+										Remove
+									</button>
 									<p className="text-sm leading-6 text-gray-500">
 										{address.city}
 									</p>
