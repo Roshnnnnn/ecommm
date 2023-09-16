@@ -7,13 +7,15 @@ import {
 } from "../features/cart/cartSlice";
 import { Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { updateUserAsync } from "../features/auth/authSlice";
+import {
+	selectLoggedInUser,
+	updateUserAsync,
+} from "../features/auth/authSlice";
 import { useState } from "react";
 import {
 	createOrderAsync,
 	selectCurrentOrder,
 } from "../features/order/orderSlice";
-import { selectUserInfo } from "../features/user/userSlice";
 
 const Checkout = () => {
 	const dispatch = useDispatch();
@@ -59,7 +61,7 @@ const Checkout = () => {
 	const [selectedAddress, setSelectedAddress] = useState(null);
 	const [paymentMethod, setPaymentMethod] = useState("cash");
 
-	const user = useSelector(selectUserInfo);
+	const user = useSelector(selectLoggedInUser);
 
 	const {
 		register,
@@ -260,7 +262,6 @@ const Checkout = () => {
 									<ul role="list">
 										{user.addresses.map((address, index) => (
 											<li
-												w
 												key={index}
 												className="flex justify-between gap-x-6 py-5 px-5 border-solid border-2 border-gray-200"
 											>
