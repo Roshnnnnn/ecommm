@@ -51,8 +51,8 @@ const UserProfile = () => {
 										console.log(data);
 										dispatch(
 											updateUserAsync({
-												...user,
-												addresses: [...user.addresses, data],
+												...userInfo,
+												addresses: [...userInfo.addresses, data],
 											})
 										);
 										reset();
@@ -225,7 +225,7 @@ const UserProfile = () => {
 											</p>
 
 											<ul role="list">
-												{user.addresses.map((address, index) => (
+												{userInfo.addresses.map((address, index) => (
 													<li
 														w
 														key={index}
@@ -233,7 +233,7 @@ const UserProfile = () => {
 													>
 														<div className="flex min-w-0 gap-x-4">
 															<input
-																onChange={handleAddress}
+																// onChange={handleAddress}
 																value={index}
 																name="address"
 																type="radio"
