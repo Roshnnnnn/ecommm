@@ -10,18 +10,18 @@ const initialState = {
 	userInfo: null,
 };
 
-export const fetchLoggedInUserOrderAsync = createAsyncThunk(
-	"user/fetchLoggedInUserOrders",
-	async () => {
-		const response = await fetchLoggedInUserOrders();
-		return response.data;
-	}
-);
-
 export const fetchLoggedInUserAsync = createAsyncThunk(
 	"user/fetchLoggedInUser",
 	async () => {
 		const response = await fetchLoggedInUser();
+		return response.data;
+	}
+);
+
+export const fetchLoggedInUserOrderAsync = createAsyncThunk(
+	"user/fetchLoggedInUserOrders",
+	async () => {
+		const response = await fetchLoggedInUserOrders();
 		return response.data;
 	}
 );
@@ -40,12 +40,12 @@ export const userSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchLoggedInUserOrderAsync.pending, (state) => {
+			.addCase(fetchLoggedInUserAsync.pending, (state) => {
 				state.status = "loading";
 			})
-			.addCase(fetchLoggedInUserOrderAsync.fulfilled, (state, action) => {
+			.addCase(fetchLoggedInUserAsync.fulfilled, (state, action) => {
 				state.status = "idle";
-				state.userInfo.orders = action.payload;
+				state.userInfo = action.payload;
 			})
 			.addCase(updateUserAsync.pending, (state) => {
 				state.status = "loading";
@@ -54,12 +54,12 @@ export const userSlice = createSlice({
 				state.status = "idle";
 				state.userInfo = action.payload;
 			})
-			.addCase(fetchLoggedInUserAsync.pending, (state) => {
+			.addCase(fetchLoggedInUserOrderAsync.pending, (state) => {
 				state.status = "loading";
 			})
-			.addCase(fetchLoggedInUserAsync.fulfilled, (state, action) => {
+			.addCase(fetchLoggedInUserOrderAsync.fulfilled, (state, action) => {
 				state.status = "idle";
-				state.userInfo = action.payload;
+				state.userInfo.orders = action.payload;
 			});
 	},
 });
@@ -67,7 +67,5 @@ export const userSlice = createSlice({
 export const selectUserOrders = (state) => state.user.userInfo.orders;
 export const selectUserInfo = (state) => state.user.userInfo;
 export const selectUserInfoStatus = (state) => state.user.status;
-
-// export const { increment } = userSlice.actions;
 
 export default userSlice.reducer;
