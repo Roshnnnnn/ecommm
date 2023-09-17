@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import {  } from './orderSlice';
+import React, { useState, Fragment } from "react";
+import { useSelector, useDispatch } from "react-redux";
+// import { selectCount } from "./cartSlice";
+import { Dialog, Transition } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { Link, Navigate } from "react-router-dom";
+import {
+	deleteItemFromCartAsync,
+	selectItems,
+	updateCartAsync,
+} from "./orderSlice";
 
-export default function Order() {
-  const dispatch = useDispatch();
+const Cart = () => {
+	const dispatch = useDispatch();
 
-  return (
-    <div>
-      <div>{/* We will use to show orders on Admin Page */}</div>
-    </div>
-  );
-}
+	return (
+		<div>
+			<div></div>
+		</div>
+	);
+};
+
+export default Cart;

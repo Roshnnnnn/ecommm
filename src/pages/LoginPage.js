@@ -1,8 +1,12 @@
+import React from "react";
 import Login from "../features/auth/components/Login";
-function LoginPage() {
-    return ( <div>
-        <Login></Login>
-    </div>  );
-}
+
+const LoginPage = () => {
+	return (
+		<div>
+			<Login />
+		</div>
+	);
+};
 
 export default LoginPage;
