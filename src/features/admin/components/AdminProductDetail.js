@@ -6,7 +6,7 @@ import {
   fetchProductByIdAsync,
   selectProductById,
   selectProductListStatus,
-} from '../productSlice';
+} from '../../product/productSlice';
 import { useParams } from 'react-router-dom';
 import { addToCartAsync, selectItems } from '../../cart/cartSlice';
 import { selectLoggedInUser } from '../../auth/authSlice';
@@ -19,7 +19,7 @@ function classNames(...classes) {
 }
 
 
-export default function ProductDetail() {
+export default function AdminProductDetail() {
   const [selectedColor, setSelectedColor] = useState();
   const [selectedSize, setSelectedSize] = useState();
   const items = useSelector(selectItems);
@@ -43,7 +43,8 @@ export default function ProductDetail() {
       if (selectedSize) {
         newItem.size = selectedSize;
       }
-      dispatch(addToCartAsync({item:newItem, alert}));
+      dispatch(addToCartAsync(newItem));
+      alert.success('Item added to Cart');
     } else {
       alert.error('Item Already added');
     }

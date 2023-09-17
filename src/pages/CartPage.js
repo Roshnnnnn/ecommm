@@ -1,12 +1,9 @@
-import React from "react";
-import Cart from "../features/cart/cart";
+import Cart from "../features/cart/Cart";
 
-const CartPage = () => {
-	return (
-		<div>
-			<Cart />
-		</div>
-	);
-};
+function CartPage() {
+    return <div>
+        <Cart></Cart>
+    </div>;
+}
 
 export default CartPage;
