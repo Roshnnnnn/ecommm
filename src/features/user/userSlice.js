@@ -41,26 +41,26 @@ export const userSlice = createSlice({
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
+			.addCase(fetchLoggedInUserOrderAsync.pending, (state) => {
+				state.status = "loading";
+			})
+			.addCase(fetchLoggedInUserOrderAsync.fulfilled, (state, action) => {
+				state.status = "idle";
+				state.userOrders = action.payload;
+			})
 			// .addCase(fetchLoggedInUserAsync.pending, (state) => {
 			// 	state.status = "loading";
 			// })
 			// .addCase(fetchLoggedInUserAsync.fulfilled, (state, action) => {
 			// 	state.status = "idle";
 			// 	state.userInfo = action.payload;
-			// });
+			// })
 			.addCase(updateUserAsync.pending, (state) => {
 				state.status = "loading";
 			})
 			.addCase(updateUserAsync.fulfilled, (state, action) => {
 				state.status = "idle";
 				state.userInfo = action.payload;
-			})
-			.addCase(fetchLoggedInUserOrderAsync.pending, (state) => {
-				state.status = "loading";
-			})
-			.addCase(fetchLoggedInUserOrderAsync.fulfilled, (state, action) => {
-				state.status = "idle";
-				state.userOrders.orders = action.payload;
 			});
 	},
 });

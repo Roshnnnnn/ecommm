@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createUser, checkUser } from "./authAPI";
+import { createUser, checkUser, fetchLoggedInUser } from "./authAPI";
 import { updateUser } from "../user/userAPI";
 
 const initialState = {
@@ -28,6 +28,14 @@ export const updateUserAsync = createAsyncThunk(
 	"user/updateUser",
 	async (update) => {
 		const response = await updateUser(update);
+		return response.data;
+	}
+);
+
+export const fetchLoggedInUserAsync = createAsyncThunk(
+	"user/fetchLoggedInUser",
+	async () => {
+		const response = await fetchLoggedInUser();
 		return response.data;
 	}
 );
@@ -62,6 +70,13 @@ export const authSlice = createSlice({
 			.addCase(updateUserAsync.fulfilled, (state, action) => {
 				state.status = "idle";
 				state.loggedInUser = action.payload;
+			})
+			.addCase(fetchLoggedInUserAsync.pending, (state) => {
+				state.status = "loading";
+			})
+			.addCase(fetchLoggedInUserAsync.fulfilled, (state, action) => {
+				state.status = "idle";
+				state.userInfo = action.payload;
 			});
 	},
 });
@@ -69,7 +84,5 @@ export const authSlice = createSlice({
 export const selectLoggedInUser = (state) => state.auth.loggedInUser;
 
 export const selectError = (state) => state.auth.error;
-
-export const { increment } = authSlice.actions;
 
 export default authSlice.reducer;
