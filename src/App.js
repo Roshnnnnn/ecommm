@@ -20,7 +20,7 @@ import OrderSuccessPage from "./pages/OrderSuccessPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import {
-	fetchLoggedInUserAsync,
+	// fetchLoggedInUserAsync,
 	selectUserInfo,
 } from "./features/user/userSlice";
 
@@ -76,9 +76,9 @@ const router = createBrowserRouter([
 	{
 		path: "/orders",
 		element: (
-			<Protected>
-				<UserOrdersPage />
-			</Protected>
+			// <Protected>
+			<UserOrdersPage />
+			// </Protected>
 		),
 	},
 	{
@@ -101,14 +101,14 @@ const router = createBrowserRouter([
 
 function App() {
 	const dispatch = useDispatch();
-	const user = useSelector(selectUserInfo);
+	// const user = useSelector(selectUserInfo);
 
-	useEffect(() => {
-		if (user) {
-			dispatch(fetchItemsByUserIdAsync(user.id));
-			dispatch(fetchLoggedInUserAsync(user.id));
-		}
-	}, [dispatch, user]);
+	// useEffect(() => {
+	// 	if (user) {
+	// dispatch(fetchItemsByUserIdAsync(user.id));
+	// dispatch(fetchLoggedInUserAsync(user.id));
+	// 	}
+	// }, [dispatch, user]);
 
 	return (
 		<div className="App">
