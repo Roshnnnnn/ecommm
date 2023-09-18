@@ -10,7 +10,7 @@ import {
 	selectCategories,
 	selectProductListStatus,
 	selectTotalItems,
-} from "../ProductSlice.js";
+} from "../productSlice";
 import { Dialog, Disclosure, Menu, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
