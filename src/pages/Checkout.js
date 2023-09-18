@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -12,7 +11,7 @@ import {
 	selectLoggedInUser,
 	updateUserAsync,
 } from "../features/auth/authSlice";
-
+import { useState } from "react";
 import {
 	createOrderAsync,
 	selectCurrentOrder,
@@ -73,7 +72,7 @@ const Checkout = () => {
 
 	return (
 		<>
-			{!items.length && <Navigate to={"/"} replace={true} />}
+			{!items.length > 0 && <Navigate to={"/"} replace={true} />}
 			{currentOrder && (
 				<Navigate to={`/order-success/${currentOrder.id}`} replace={true} />
 			)}

@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
 	addToCart,
-	deleteItemFromCart,
 	fetchItemsByUserId,
-	resetCart,
 	updateCart,
+	deleteItemFromCart,
+	resetCart,
 } from "./cartAPI";
 
 const initialState = {
@@ -53,7 +53,7 @@ export const resetCartAsync = createAsyncThunk(
 	}
 );
 
-export const cartSlice = createSlice({
+export const counterSlice = createSlice({
 	name: "cart",
 	initialState,
 	reducers: {},
@@ -72,11 +72,6 @@ export const cartSlice = createSlice({
 			.addCase(fetchItemsByUserIdAsync.fulfilled, (state, action) => {
 				state.status = "idle";
 				state.items = action.payload;
-				state.cartLoaded = true;
-			})
-			.addCase(fetchItemsByUserIdAsync.rejected, (state, action) => {
-				state.status = "idle";
-				state.cartLoaded = true;
 			})
 			.addCase(updateCartAsync.pending, (state) => {
 				state.status = "loading";
@@ -108,8 +103,8 @@ export const cartSlice = createSlice({
 	},
 });
 
-export const selectItems = (state) => state.cart.items;
-export const selectCartStatus = (state) => state.cart.status;
-export const selectCartLoaded = (state) => state.cart.cartLoaded;
+export const { increment } = counterSlice.actions;
 
-export default cartSlice.reducer;
+export const selectItems = (state) => state.cart.items;
+
+export default counterSlice.reducer;
