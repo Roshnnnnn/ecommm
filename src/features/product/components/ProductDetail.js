@@ -6,7 +6,7 @@ import {
 	fetchProductByIdAsync,
 	selectProductById,
 	selectProductListStatus,
-} from "../productSlice";
+} from "../ProductSlice";
 import { useParams } from "react-router-dom";
 import { addToCartAsync } from "../../cart/cartSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
