@@ -2362,15 +2362,6 @@
 					"pinCode": "560034"
 				},
 				{
-					"name": "Jack Morris",
-					"email": "jack@gmail.com",
-					"city": "Delhi",
-					"state": "Delhi",
-					"pinCode": "110006",
-					"phone": "12312331232",
-					"street": "12th cross"
-				},
-				{
 					"name": "Roshan",
 					"email": "test@gmail.com",
 					"phone": "1234567888",
@@ -2416,15 +2407,6 @@
 			"email": "test0@gmail.com",
 			"password": "Qwerty123",
 			"addresses": [
-				{
-					"name": "Roshan",
-					"email": "test0@gmail.com",
-					"phone": "1234567888",
-					"street": "D D Nagar",
-					"city": "Gwalior",
-					"state": "Madhya Pradesh",
-					"pinCode": "474020"
-				},
 				{
 					"name": "Himanshu",
 					"email": "test0@gmail.com",
