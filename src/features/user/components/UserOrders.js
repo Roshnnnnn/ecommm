@@ -6,7 +6,6 @@ import {
 	selectUserOrders,
 	selectUserInfo,
 } from "../userSlice";
-import { selectLoggedInUser } from "../../auth/authSlice";
 
 const UserOrders = () => {
 	const dispatch = useDispatch();

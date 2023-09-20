@@ -16,7 +16,7 @@ import Protected from "./features/auth/components/Protected";
 import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedInUser } from "./features/auth/authSlice";
-import { fetchLoggedInAsync } from "./features/user/userSlice";
+import { fetchLoggedInUserAsync } from "./features/user/userSlice";
 import PageNotFound from "./pages/404";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
@@ -104,7 +104,7 @@ function App() {
 	useEffect(() => {
 		if (user) {
 			dispatch(fetchItemsByUserIdAsync(user.id));
-			dispatch(fetchLoggedInAsync(user.id));
+			dispatch(fetchLoggedInUserAsync(user.id));
 		}
 	}, [dispatch, user]);
 
