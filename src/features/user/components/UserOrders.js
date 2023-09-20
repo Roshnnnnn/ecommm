@@ -1,17 +1,25 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
-import { fetchLoggedInUserOrderAsync, selectUserOrders } from "../userSlice";
+import {
+	fetchLoggedInUserOrderAsync,
+	selectUserOrders,
+	selectUserInfo,
+} from "../userSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
 
 const UserOrders = () => {
 	const dispatch = useDispatch();
-	const user = useSelector(selectLoggedInUser);
+	const user = useSelector(selectUserInfo);
 	const orders = useSelector(selectUserOrders);
 
 	useEffect(() => {
 		dispatch(fetchLoggedInUserOrderAsync(user.id));
-	}, []);
+	}, [dispatch]);
+
+	if (!orders) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<div>
