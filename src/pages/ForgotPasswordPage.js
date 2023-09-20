@@ -1,10 +1,12 @@
+import React from "react";
 import ForgotPassword from "../features/auth/components/ForgotPassword";
-function ForgotPasswordPage() {
+
+const ForgotPasswordPage = () => {
 	return (
-		<>
-			<ForgotPassword></ForgotPassword>
-		</>
+		<div>
+			<ForgotPassword />
+		</div>
 	);
-}
+};
 
 export default ForgotPasswordPage;

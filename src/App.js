@@ -23,6 +23,7 @@ import OrderSuccessPage from "./pages/OrderSuccessPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import UserProfilePage from "./pages/UserProfilePage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 const router = createBrowserRouter([
 	{
@@ -97,6 +98,7 @@ const router = createBrowserRouter([
 		path: "/reset-password",
 		element: <ResetPasswordPage />,
 	},
+	{ path: "/forgot-password", element: <ForgotPasswordPage /> },
 	{
 		path: "*",
 		element: (
