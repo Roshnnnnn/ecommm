@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
-import { fetchLoggedInUserOrdersAsync, selectUserOrders } from "../userSlice";
+import { fetchLoggedInUserOrderAsync, selectUserOrders } from "../userSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
 
 const UserOrders = () => {
@@ -10,7 +10,7 @@ const UserOrders = () => {
 	const orders = useSelector(selectUserOrders);
 
 	useEffect(() => {
-		dispatch(fetchLoggedInUserOrdersAsync(user.id));
+		dispatch(fetchLoggedInUserOrderAsync(user.id));
 	}, []);
 
 	return (

@@ -1,12 +1,16 @@
 import React, { useState, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
-import { fetchLoggedInUserAsync } from "../userSlice";
+import { selectUserInfo } from "../userSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
 
 const UserProfile = () => {
 	const dispatch = useDispatch();
 	const user = useSelector(selectLoggedInUser);
+
+	const handleRemove = () => {};
+
+	const handleEdit = () => {};
 
 	return (
 		<div>
@@ -23,7 +27,7 @@ const UserProfile = () => {
 
 					<div className="border-t border-gray-200 px-4 py-6 sm:px-6">
 						<p className="mt-0.5 text-sm text-gray-500">Shipping Address :</p>
-						{user.addresses.map((address) => (
+						{user.addresses.map((address, index) => (
 							<div className="flex justify-between gap-x-6 py-5 px-5 border-solid border-2 border-gray-200">
 								<div className="flex min-w-0 gap-x-4">
 									<div className="min-w-0 flex-auto">
@@ -45,6 +49,22 @@ const UserProfile = () => {
 									<p className="mt-1 truncate text-xs leading-5 text-gray-500">
 										{address.city}
 									</p>
+								</div>
+								<div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+									<button
+										onClick={(e) => handleEdit(e, index)}
+										type="button"
+										className="font-medium text-indigo-600 hover:text-indigo-500"
+									>
+										Edit
+									</button>
+									<button
+										onClick={(e) => handleRemove(e, index)}
+										type="button"
+										className="font-medium text-indigo-600 hover:text-indigo-500"
+									>
+										Remove
+									</button>
 								</div>
 							</div>
 						))}

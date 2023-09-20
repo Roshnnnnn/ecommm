@@ -5,6 +5,7 @@ import UserProfile from "../features/user/components/UserProfile";
 const UserProfilePage = () => {
 	return (
 		<Navbar>
+			<h1 className="text-2xl m-auto">My Profile</h1>
 			<UserProfile />
 		</Navbar>
 	);
