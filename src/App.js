@@ -22,6 +22,7 @@ import PageNotFound from "./pages/404";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import UserProfilePage from "./pages/UserProfilePage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const router = createBrowserRouter([
 	{
@@ -90,7 +91,11 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/logout",
-		element: <Logout></Logout>,
+		element: <Logout />,
+	},
+	{
+		path: "/reset-password",
+		element: <ResetPasswordPage />,
 	},
 	{
 		path: "*",
