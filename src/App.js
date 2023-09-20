@@ -20,6 +20,7 @@ import PageNotFound from "./pages/404";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import UserOrders from "./features/user/components/UserOrders";
 import UserOrdersPage from "./pages/UserOrdersPage";
+import UserProfile from "./features/user/components/UserProfile";
 
 const router = createBrowserRouter([
 	{
@@ -75,6 +76,14 @@ const router = createBrowserRouter([
 		element: (
 			<Protected>
 				<UserOrdersPage />
+			</Protected>
+		),
+	},
+	{
+		path: "/profile",
+		element: (
+			<Protected>
+				<UserProfile />
 			</Protected>
 		),
 	},
