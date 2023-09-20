@@ -1,12 +1,7 @@
-// import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
-// import { checkUserAsync, selectError, selectLoggedInUser } from "../authSlice";
 
-export default function ForgetPassword() {
-	// const dispatch = useDispatch();
-	// const error = useSelector(selectError);
-	// const user = useSelector(selectLoggedInUser);
+export default function ForgotPassword() {
 	const {
 		register,
 		handleSubmit,
@@ -17,7 +12,6 @@ export default function ForgetPassword() {
 
 	return (
 		<div>
-			{/* {user && <Navigate to="/" replace={true} />} */}
 			<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 				<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 					<img
@@ -34,9 +28,6 @@ export default function ForgetPassword() {
 					<form
 						noValidate
 						onSubmit={handleSubmit((data) => {
-							// dispatch(
-							// 	checkUserAsync({ email: data.email, password: data.password })
-							// );
 							console.log(data);
 						})}
 						className="space-y-6"
@@ -63,40 +54,6 @@ export default function ForgetPassword() {
 								)}
 							</div>
 						</div>
-
-						{/* <div>
-							<div className="flex items-center justify-between">
-								<label
-									htmlFor="password"
-									className="block text-sm font-medium leading-6 text-gray-900"
-								>
-									Password
-								</label>
-								<div className="text-sm">
-									<Link
-										href="#"
-										className="font-semibold text-indigo-600 hover:text-indigo-500"
-									>
-										Forgot password?
-									</Link>
-								</div>
-							</div>
-							<div className="mt-2">
-								<input
-									id="password"
-									{...register("password", {
-										required: "password is required",
-									})}
-									type="password"
-									// autoComplete="current-password"
-									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-								/>
-								{errors.password && (
-									<p className="text-red-500">{errors.password.message}</p>
-								)}
-							</div>
-							{error && <p className="text-red-500">{error.message}</p>}
-						</div> */}
 
 						<div>
 							<button
