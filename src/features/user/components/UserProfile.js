@@ -14,6 +14,7 @@ const UserProfile = () => {
 	const {
 		register,
 		handleSubmit,
+		setValue,
 		reset,
 		formState: { errors },
 	} = useForm();
@@ -31,7 +32,19 @@ const UserProfile = () => {
 		setSelectedEditIndex(-1);
 	};
 
-	const handleEditForm = (index) => {};
+	const handleEditForm = (index) => {
+		setSelectedEditIndex(index);
+		const address = user.addresses[index];
+		setValue("name", address.name);
+		setValue("email", address.email);
+		setValue("city", address.city);
+		setValue("state", address.state);
+		setValue("pinCode", address.pinCode);
+		setValue("phone", address.phone);
+		setValue("street", address.street);
+	};
+
+	const handleAdd = () => {};
 
 	return (
 		<div>
@@ -46,6 +59,14 @@ const UserProfile = () => {
 						</h3>
 					</div>
 
+					<div className="border-t border-gray-200 px-4 py-6 sm:px-6"></div>
+					<button
+						type="submit"
+						className="rounded-md my-5 bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+					>
+						Add New Address
+					</button>
+
 					<div className="border-t border-gray-200 px-4 py-6 sm:px-6">
 						<p className="mt-0.5 text-sm text-gray-500">Shipping Address :</p>
 						{user.addresses.map((address, index) => (
@@ -55,7 +76,7 @@ const UserProfile = () => {
 										className="bg-white px-5 py-12 mt-12"
 										noValidate
 										onSubmit={handleSubmit((data) => {
-											handleEdit(data, index);
+											handleAdd(data);
 											console.log(data);
 
 											reset();
@@ -244,6 +265,13 @@ const UserProfile = () => {
 
 											<div className="mt-6 flex items-center justify-end gap-x-6">
 												<button
+													onClick={(e) => setSelectedEditIndex(-1)}
+													type="submit"
+													className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+												>
+													Cancel
+												</button>
+												<button
 													type="submit"
 													className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 												>
@@ -277,7 +305,7 @@ const UserProfile = () => {
 									</div>
 									<div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
 										<button
-											onClick={(e) => setSelectedEditIndex(index)}
+											onClick={(e) => handleEditForm(index)}
 											type="button"
 											className="font-medium text-indigo-600 hover:text-indigo-500"
 										>
