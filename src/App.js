@@ -17,6 +17,7 @@ import { fetchItemsByUserIdAsync } from "./features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedInUser } from "./features/auth/authSlice";
 import { fetchLoggedInUserAsync } from "./features/user/userSlice";
+import Logout from "./features/auth/components/Logout";
 import PageNotFound from "./pages/404";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
@@ -86,6 +87,10 @@ const router = createBrowserRouter([
 				<UserProfilePage />
 			</Protected>
 		),
+	},
+	{
+		path: "/logout",
+		element: <Logout></Logout>,
 	},
 	{
 		path: "*",
