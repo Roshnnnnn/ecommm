@@ -75,7 +75,7 @@ const UserOrders = () => {
 							<p>Total Item in Cart</p>
 							<p>{order.totalItems} item</p>
 						</div>
-						<p className="mt-0.5 text-sm text-gray-500">Address </p>
+						<p className="mt-0.5 text-sm text-gray-500">Shipping Address :</p>
 						<div className="flex justify-between gap-x-6 py-5 px-5 border-solid border-2 border-gray-200">
 							<div className="flex min-w-0 gap-x-4">
 								<div className="min-w-0 flex-auto">
