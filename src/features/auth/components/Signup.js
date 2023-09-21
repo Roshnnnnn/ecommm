@@ -40,6 +40,7 @@ export default function Login() {
 									email: data.email,
 									password: data.password,
 									addresses: [],
+									role: "user",
 								})
 							);
 							console.log(data);

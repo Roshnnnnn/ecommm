@@ -210,7 +210,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(" ");
 }
 
-export default function Product() {
+export default function ProductList() {
 	const dispatch = useDispatch();
 	const products = useSelector(selectAllProducts);
 	const brands = useSelector(selectBrands);
