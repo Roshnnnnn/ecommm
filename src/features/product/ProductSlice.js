@@ -5,7 +5,7 @@ import {
 	fetchBrands,
 	fetchCategories,
 	fetchProductById,
-} from "./ProductAPI";
+} from "./productAPI";
 
 const initialState = {
 	products: [],
