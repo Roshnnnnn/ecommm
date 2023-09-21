@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	clearSelectedProduct,
@@ -10,10 +11,22 @@ import {
 } from "../../product/productSlice";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 
 const ProductForm = () => {
+	const brands = useSelector(selectBrands);
+	const categories = useSelector(selectCategories);
+	const dispatch = useDispatch();
+	const params = useParams();
+
+	const {
+		register,
+		handleSubmit,
+		setValue,
+		reset,
+		formState: { errors },
+	} = useForm();
+
 	const colors = [
 		{
 			name: "White",
@@ -47,7 +60,27 @@ const ProductForm = () => {
 	];
 	return (
 		<div>
-			<form>
+			<form
+				noValidate
+				onSubmit={handleSubmit((data) => {
+					console.log(data);
+					const product = { ...data };
+					product.images = [
+						product.image1,
+						product.image2,
+						product.image3,
+						product.thumbnail,
+					];
+					product.highlights = [
+						product.highlight1,
+						product.highlight2,
+						product.highlight3,
+						product.highlight4,
+					];
+					console.log(product);
+					dispatch(createProductAsync(product));
+				})}
+			>
 				<div className="space-y-12 bg-white p-12">
 					<div className="border-b border-gray-900/10 pb-12">
 						<h2 className="text-base font-semibold leading-7 text-gray-900">
@@ -55,9 +88,15 @@ const ProductForm = () => {
 						</h2>
 
 						<div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-							<div className="sm:col-span-4">
+							{/* {selectedProduct && selectedProduct.deleted && ( */}
+							<h2 className="text-red-500 sm:col-span-6">
+								This product is deleted
+							</h2>
+							{/* )} */}
+
+							<div className="sm:col-span-6">
 								<label
-									htmlFor="username"
+									htmlFor="title"
 									className="block text-sm font-medium leading-6 text-gray-900"
 								>
 									Product Name
@@ -66,7 +105,9 @@ const ProductForm = () => {
 									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
 										<input
 											type="text"
-											name="title"
+											{...register("title", {
+												required: "name is required",
+											})}
 											id="title"
 											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
 										/>
@@ -76,7 +117,7 @@ const ProductForm = () => {
 
 							<div className="col-span-full">
 								<label
-									htmlFor="about"
+									htmlFor="description"
 									className="block text-sm font-medium leading-6 text-gray-900"
 								>
 									Description
@@ -84,7 +125,9 @@ const ProductForm = () => {
 								<div className="mt-2">
 									<textarea
 										id="description"
-										name="description"
+										{...register("description", {
+											required: "description is required",
+										})}
 										rows={3}
 										className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 										defaultValue={""}
@@ -94,9 +137,100 @@ const ProductForm = () => {
 									Write a few sentences about product.
 								</p>
 							</div>
-							<div className="sm:col-span-4">
+
+							<div className="col-span-full">
 								<label
-									htmlFor="username"
+									htmlFor="brand"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Brand
+								</label>
+								<div className="mt-2">
+									<select
+										{...register("brand", {
+											required: "brand is required",
+										})}
+									>
+										<option value="">--choose brand--</option>
+										{brands.map((brand) => (
+											<option key={brand.value} value={brand.value}>
+												{brand.label}
+											</option>
+										))}
+									</select>
+								</div>
+							</div>
+
+							<div className="col-span-full">
+								<label
+									htmlFor="colors"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Colors
+								</label>
+								<div className="mt-2">
+									{colors.map((color) => (
+										<>
+											<input
+												type="checkbox"
+												{...register("colors", {})}
+												key={color.id}
+												value={color.id}
+											/>{" "}
+											{color.name}
+										</>
+									))}
+								</div>
+							</div>
+
+							<div className="col-span-full">
+								<label
+									htmlFor="sizes"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Sizes
+								</label>
+								<div className="mt-2">
+									{sizes.map((size) => (
+										<>
+											<input
+												type="checkbox"
+												{...register("sizes", {})}
+												key={size.id}
+												value={size.id}
+											/>{" "}
+											{size.name}
+										</>
+									))}
+								</div>
+							</div>
+
+							<div className="col-span-full">
+								<label
+									htmlFor="category"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Category
+								</label>
+								<div className="mt-2">
+									<select
+										{...register("category", {
+											required: "category is required",
+										})}
+									>
+										<option value="">--choose category--</option>
+										{categories.map((category) => (
+											<option key={category.value} value={category.value}>
+												{category.label}
+											</option>
+										))}
+									</select>
+								</div>
+							</div>
+
+							<div className="sm:col-span-2">
+								<label
+									htmlFor="price"
 									className="block text-sm font-medium leading-6 text-gray-900"
 								>
 									Price
@@ -105,8 +239,214 @@ const ProductForm = () => {
 									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
 										<input
 											type="number"
-											name="price"
+											{...register("price", {
+												required: "price is required",
+												min: 1,
+												max: 10000,
+											})}
 											id="price"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div className="sm:col-span-2">
+								<label
+									htmlFor="discountPercentage"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Discount Percentage
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="number"
+											{...register("discountPercentage", {
+												required: "discountPercentage is required",
+												min: 0,
+												max: 100,
+											})}
+											id="discountPercentage"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div className="sm:col-span-2">
+								<label
+									htmlFor="stock"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Stock
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="number"
+											{...register("stock", {
+												required: "stock is required",
+												min: 0,
+											})}
+											id="stock"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div className="sm:col-span-6">
+								<label
+									htmlFor="thumbnail"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Thumbnail
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="text"
+											{...register("thumbnail", {
+												required: "thumbnail is required",
+											})}
+											id="thumbnail"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div className="sm:col-span-6">
+								<label
+									htmlFor="image1"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Image 1
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="text"
+											{...register("image1", {
+												required: "image1 is required",
+											})}
+											id="image1"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div className="sm:col-span-6">
+								<label
+									htmlFor="image2"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Image 2
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="text"
+											{...register("image2", {
+												required: "image is required",
+											})}
+											id="image2"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div className="sm:col-span-6">
+								<label
+									htmlFor="image2"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Image 3
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="text"
+											{...register("image3", {
+												required: "image is required",
+											})}
+											id="image3"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div className="sm:col-span-6">
+								<label
+									htmlFor="highlight1"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Highlight 1
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="text"
+											{...register("highlight1", {})}
+											id="highlight1"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="sm:col-span-6">
+								<label
+									htmlFor="highlight2"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Highlight 2
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="text"
+											{...register("highlight2", {})}
+											id="highlight2"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="sm:col-span-6">
+								<label
+									htmlFor="highlight3"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Highlight 3
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="text"
+											{...register("highlight3", {})}
+											id="highlight3"
+											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="sm:col-span-6">
+								<label
+									htmlFor="highlight4"
+									className="block text-sm font-medium leading-6 text-gray-900"
+								>
+									Highlight 4
+								</label>
+								<div className="mt-2">
+									<div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 ">
+										<input
+											type="text"
+											{...register("highlight4", {})}
+											id="highlight4"
 											className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
 										/>
 									</div>
@@ -117,7 +457,7 @@ const ProductForm = () => {
 
 					<div className="border-b border-gray-900/10 pb-12">
 						<h2 className="text-base font-semibold leading-7 text-gray-900">
-							Extra
+							Extra{" "}
 						</h2>
 
 						<div className="mt-10 space-y-10">

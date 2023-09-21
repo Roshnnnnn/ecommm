@@ -7,7 +7,6 @@ export function fetchAllProducts() {
 }
 
 export function fetchProductByFilters(filter, sort, pagination) {
-	// filter= {"category":"smartphone"}
 	let queryString = "";
 	for (let key in filter) {
 		const categoryValues = filter[key];
@@ -47,9 +46,22 @@ export function fetchBrands() {
 		resolve({ data });
 	});
 }
+
 export function fetchProductById(id) {
 	return new Promise(async (resolve) => {
 		const response = await fetch("http://localhost:8080/products/" + id);
+		const data = await response.json();
+		resolve({ data });
+	});
+}
+
+export function createProduct(product) {
+	return new Promise(async (resolve) => {
+		const response = await fetch("http://localhost:8080/products/", {
+			method: "POST",
+			body: JSON.stringify(product),
+			headers: { "content-type": "application/json" },
+		});
 		const data = await response.json();
 		resolve({ data });
 	});
