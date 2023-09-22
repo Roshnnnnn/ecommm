@@ -18,6 +18,8 @@ const ProductForm = () => {
 	const categories = useSelector(selectCategories);
 	const dispatch = useDispatch();
 	const params = useParams();
+	const selectedProduct = useSelector(selectProductById);
+	const [openModal, setOpenModal] = useState(null);
 
 	const {
 		register,
@@ -58,6 +60,40 @@ const ProductForm = () => {
 		{ name: "2XL", inStock: true, id: "2xl" },
 		{ name: "3XL", inStock: true, id: "3xl" },
 	];
+
+	useEffect(() => {
+		if (params.id) {
+			dispatch(fetchProductByIdAsync(params.id));
+		}
+	}, [params.id, dispatch]);
+
+	useEffect(() => {
+		if (selectedProduct && params.id) {
+			setValue("title", selectedProduct.title);
+			setValue("description", selectedProduct.description);
+			setValue("price", selectedProduct.price);
+			setValue("discountPercentage", selectedProduct.discountPercentage);
+			setValue("thumbnail", selectedProduct.thumbnail);
+			setValue("stock", selectedProduct.stock);
+			setValue("image1", selectedProduct.images[0]);
+			setValue("image2", selectedProduct.images[1]);
+			setValue("image3", selectedProduct.images[2]);
+			setValue("brand", selectedProduct.brand);
+			setValue("category", selectedProduct.category);
+			setValue("highlight1", selectedProduct.highlights[0]);
+			setValue("highlight2", selectedProduct.highlights[1]);
+			setValue("highlight3", selectedProduct.highlights[2]);
+			setValue("highlight4", selectedProduct.highlights[3]);
+			setValue(
+				"sizes",
+				selectedProduct.sizes.map((size) => size.id)
+			);
+			setValue(
+				"colors",
+				selectedProduct.colors.map((color) => color.id)
+			);
+		}
+	}, [selectedProduct, params.id, setValue]);
 	return (
 		<div>
 			<form
