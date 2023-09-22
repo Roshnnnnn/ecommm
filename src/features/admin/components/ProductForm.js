@@ -21,6 +21,12 @@ const ProductForm = () => {
 	const selectedProduct = useSelector(selectProductById);
 	const [openModal, setOpenModal] = useState(null);
 
+	const handleDelete = () => {
+		const product = { ...selectedProduct };
+		product.deleted = true;
+		dispatch(updateProductAsync(product));
+	};
+
 	const {
 		register,
 		handleSubmit,
@@ -64,6 +70,8 @@ const ProductForm = () => {
 	useEffect(() => {
 		if (params.id) {
 			dispatch(fetchProductByIdAsync(params.id));
+		} else {
+			dispatch(clearSelectedProduct());
 		}
 	}, [params.id, dispatch]);
 
@@ -94,6 +102,7 @@ const ProductForm = () => {
 			);
 		}
 	}, [selectedProduct, params.id, setValue]);
+
 	return (
 		<div>
 			<form
@@ -107,14 +116,24 @@ const ProductForm = () => {
 						product.image3,
 						product.thumbnail,
 					];
-					product.highlights = [
-						product.highlight1,
-						product.highlight2,
-						product.highlight3,
-						product.highlight4,
-					];
+					product.rating = 0;
+					delete product["image1"];
+					delete product["image2"];
+					delete product["image3"];
+					product.price = +product.price;
+					product.stock = +product.stock;
+					product.discountPercentage = +product.discountPercentage;
 					console.log(product);
-					dispatch(createProductAsync(product));
+
+					if (params.id) {
+						product.id = params.id;
+						dispatch(updateProductAsync(product));
+						product.rating = selectedProduct.rating || 0;
+						reset();
+					} else {
+						dispatch(createProductAsync(product));
+						reset();
+					}
 				})}
 			>
 				<div className="space-y-12 bg-white p-12">
@@ -124,11 +143,11 @@ const ProductForm = () => {
 						</h2>
 
 						<div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-							{/* {selectedProduct && selectedProduct.deleted && ( */}
-							<h2 className="text-red-500 sm:col-span-6">
-								This product is deleted
-							</h2>
-							{/* )} */}
+							{selectedProduct && selectedProduct.deleted && (
+								<h2 className="text-red-500 sm:col-span-6">
+									This product is deleted
+								</h2>
+							)}
 
 							<div className="sm:col-span-6">
 								<label
@@ -579,6 +598,18 @@ const ProductForm = () => {
 					>
 						Cancel
 					</button>
+					{selectedProduct && !selectedProduct.deleted && (
+						<button
+							onClick={(e) => {
+								e.preventDefault();
+								// setOpenModal(true);
+								handleDelete();
+							}}
+							className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+						>
+							Delete
+						</button>
+					)}
 					<button
 						type="submit"
 						className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

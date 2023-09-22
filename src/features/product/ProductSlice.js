@@ -6,7 +6,7 @@ import {
 	fetchCategories,
 	fetchProductById,
 	createProduct,
-	// updateProduct,
+	updateProduct,
 } from "./productAPI";
 
 const initialState = {
@@ -66,12 +66,20 @@ export const createProductAsync = createAsyncThunk(
 	}
 );
 
+export const updateProductAsync = createAsyncThunk(
+	"product/update",
+	async (update) => {
+		const response = await updateProduct(update);
+		return response.data;
+	}
+);
+
 export const productSlice = createSlice({
 	name: "product",
 	initialState,
 	reducers: {
-		increment: (state) => {
-			state.value += 1;
+		clearSelectedProduct: (state) => {
+			state.selectedProduct = null;
 		},
 	},
 	extraReducers: (builder) => {
@@ -118,6 +126,17 @@ export const productSlice = createSlice({
 			.addCase(createProductAsync.fulfilled, (state, action) => {
 				state.status = "idle";
 				state.products.push(action.payload);
+			})
+			.addCase(updateProductAsync.pending, (state) => {
+				state.status = "loading";
+			})
+			.addCase(updateProductAsync.fulfilled, (state, action) => {
+				state.status = "idle";
+				const index = state.products.findIndex(
+					(product) => product.id === action.payload.id
+				);
+				state.products[index] = action.payload;
+				state.selectedProduct = action.payload;
 			});
 	},
 });
