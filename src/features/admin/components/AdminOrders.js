@@ -43,6 +43,23 @@ const AdminOrders = () => {
 
 	const handleSort = () => {};
 
+	const chooseColor = (status) => {
+		switch (status) {
+			case "pending":
+				return "bg-purple-200 text-purple-600";
+			case "dispatched":
+				return "bg-yellow-200 text-yellow-600";
+			case "delivered":
+				return "bg-green-200 text-green-600";
+			case "received":
+				return "bg-green-200 text-green-600";
+			case "cancelled":
+				return "bg-red-200 text-red-600";
+			default:
+				return "bg-purple-200 text-purple-600";
+		}
+	};
+
 	useEffect(() => {
 		const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
 		dispatch(fetchAllOrdersAsync({ sort, pagination }));
@@ -117,18 +134,22 @@ const AdminOrders = () => {
 														</span>
 													</div>
 												</td>
-												<td className="py-3 px-6 text-center">
+												<td className="py-3 px-0 text-center">
 													{order.id === editableOrderId ? (
 														<select
 															onChange={(e) => handleOrderStatus(e, order)}
 														>
-															<option value={"pending"}>Pending</option>
-															<option value={"dispatch"}>Dispatch</option>
-															<option value={"delivered"}>Delivered</option>
-															<option value={"cancelled"}>Cancelled</option>
+															<option value="pending">Pending</option>
+															<option value="dispatched">Dispatched</option>
+															<option value="delivered">Delivered</option>
+															<option value="cancelled">Cancelled</option>
 														</select>
 													) : (
-														<span className="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">
+														<span
+															className={`${chooseColor(
+																order.status
+															)} py-1 px-3 rounded-full text-xs`}
+														>
 															{order.status}
 														</span>
 													)}
