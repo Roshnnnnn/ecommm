@@ -24,12 +24,14 @@ const AdminOrders = () => {
 	const [sort, setSort] = useState({});
 
 	const handleEdit = (order) => {
-		console.log("Edit");
+		setEditableOrderId(order.id);
 	};
 
 	const handleShow = () => {
 		console.log("Show");
 	};
+
+	const handleOrderStatus = () => {};
 
 	useEffect(() => {
 		const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
@@ -109,6 +111,12 @@ const AdminOrders = () => {
 													<span className="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">
 														{order.status}
 													</span>
+													<select onChange={(e) => handleOrderStatus(e, order)}>
+														<option value={"pending"}>Pending</option>
+														<option value={"dispatch"}>Dispatch</option>
+														<option value={"delivered"}>Delivered</option>
+														<option value={"cancelled"}>Cancelled</option>
+													</select>
 												</td>
 												<td className="py-3 px-6 text-center">
 													<div className="flex item-center justify-center">
