@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createOrder } from "./orderAPI";
+import { createOrder, fetchAllOrders } from "./orderAPI";
 
 const initialState = {
 	status: "idle",
@@ -11,6 +11,22 @@ export const createOrderAsync = createAsyncThunk(
 	"cart/createOrder",
 	async (order) => {
 		const response = await createOrder(order);
+		return response.data;
+	}
+);
+
+// export const updateOrderAsync = createAsyncThunk(
+// 	"order/updateOrder",
+// 	async (order) => {
+// 		const response = await updateOrder(order);
+// 		return response.data;
+// 	}
+// );
+
+export const fetchAllOrdersAsync = createAsyncThunk(
+	"cart/fetchAllOrders",
+	async ({ sort, pagination }) => {
+		const response = await createOrder(sort, pagination);
 		return response.data;
 	}
 );
