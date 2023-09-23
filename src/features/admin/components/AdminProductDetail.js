@@ -10,7 +10,7 @@ import {
 import { useParams } from "react-router-dom";
 import { addToCartAsync } from "../../cart/cartSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
-import { dispatchDOMEvent } from "@testing-library/user-event/dist/types/event/dispatchEvent.js";
+import { discountedPrice } from "../../../app/constants.js";
 
 const colors = [
 	{ name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -153,7 +153,7 @@ export default function AdminProductDetail() {
 							</p>
 
 							<p className="text-3xl tracking-tight text-gray-900">
-								${dispatchDOMEvent(product)}
+								${discountedPrice(product)}
 							</p>
 
 							{/* Reviews */}
