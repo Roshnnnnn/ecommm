@@ -31,7 +31,17 @@ const AdminOrders = () => {
 		console.log("Show");
 	};
 
-	const handleOrderStatus = () => {};
+	const handleOrderStatus = (e, order) => {
+		const updatedOrder = { ...order, status: e.target.value };
+		dispatch(updateOrderAsync(updatedOrder));
+		setEditableOrderId(-1);
+	};
+
+	const handleOrderPaymentStatus = () => {};
+
+	const handlePage = () => {};
+
+	const handleSort = () => {};
 
 	useEffect(() => {
 		const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
@@ -108,15 +118,20 @@ const AdminOrders = () => {
 													</div>
 												</td>
 												<td className="py-3 px-6 text-center">
-													<span className="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">
-														{order.status}
-													</span>
-													<select onChange={(e) => handleOrderStatus(e, order)}>
-														<option value={"pending"}>Pending</option>
-														<option value={"dispatch"}>Dispatch</option>
-														<option value={"delivered"}>Delivered</option>
-														<option value={"cancelled"}>Cancelled</option>
-													</select>
+													{order.id === editableOrderId ? (
+														<select
+															onChange={(e) => handleOrderStatus(e, order)}
+														>
+															<option value={"pending"}>Pending</option>
+															<option value={"dispatch"}>Dispatch</option>
+															<option value={"delivered"}>Delivered</option>
+															<option value={"cancelled"}>Cancelled</option>
+														</select>
+													) : (
+														<span className="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">
+															{order.status}
+														</span>
+													)}
 												</td>
 												<td className="py-3 px-6 text-center">
 													<div className="flex item-center justify-center">
