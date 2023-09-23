@@ -43,7 +43,11 @@ const AdminOrders = () => {
 		setPage(page);
 	};
 
-	const handleSort = () => {};
+	const handleSort = (sortOption) => {
+		const sort = { _sort: sortOption.sort, _order: sortOption.order };
+		console.log({ sort });
+		setSort(sort);
+	};
 
 	const chooseColor = (status) => {
 		switch (status) {
@@ -64,6 +68,7 @@ const AdminOrders = () => {
 
 	useEffect(() => {
 		const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
+
 		dispatch(fetchAllOrdersAsync({ sort, pagination }));
 	}, [dispatch, page, sort]);
 	return (
@@ -78,13 +83,40 @@ const AdminOrders = () => {
 									<thead>
 										<tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
 											<th
-												className="py-3 px-6 text-left"
-												onClick={(e) => handleSort()}
+												className="py-3 px-6 text-left cursor-pointer"
+												onClick={(e) =>
+													handleSort({
+														sort: "id",
+														order: sort?._order === "asc" ? "desc" : "asc",
+													})
+												}
 											>
-												Order#
+												Order#{" "}
+												{sort._sort === "createdAt" &&
+													(sort._order === "asc" ? (
+														<ArrowUpIcon className="w-4 h-4 inline" />
+													) : (
+														<ArrowDownIcon className="w-4 h-4 inline" />
+													))}
 											</th>
 											<th className="py-3 px-6 text-left">Items</th>
-											<th className="py-3 px-6 text-center">Total Amount</th>
+											<th
+												className="py-3 px-6 text-center cursor-pointer"
+												onClick={(e) =>
+													handleSort({
+														sort: "totalAmount",
+														order: sort?._order === "asc" ? "desc" : "asc",
+													})
+												}
+											>
+												Total Amount#{" "}
+												{sort._sort === "totalAmount" &&
+													(sort._order === "asc" ? (
+														<ArrowUpIcon className="w-4 h-4 inline" />
+													) : (
+														<ArrowDownIcon className="w-4 h-4 inline" />
+													))}
+											</th>
 											<th className="py-3 px-6 text-center">
 												Shipping Address
 											</th>
