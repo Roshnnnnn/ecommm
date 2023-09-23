@@ -39,7 +39,9 @@ const AdminOrders = () => {
 
 	const handleOrderPaymentStatus = () => {};
 
-	const handlePage = () => {};
+	const handlePage = (page) => {
+		setPage(page);
+	};
 
 	const handleSort = () => {};
 
@@ -66,7 +68,7 @@ const AdminOrders = () => {
 	}, [dispatch, page, sort]);
 	return (
 		<div>
-			<>
+			<div>
 				{/* component */}
 				<div className="overflow-x-auto">
 					<div className=" bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
@@ -75,7 +77,12 @@ const AdminOrders = () => {
 								<table className="min-w-max w-full table-auto">
 									<thead>
 										<tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-											<th className="py-3 px-6 text-left">Order</th>
+											<th
+												className="py-3 px-6 text-left"
+												onClick={(e) => handleSort()}
+											>
+												Order#
+											</th>
 											<th className="py-3 px-6 text-left">Items</th>
 											<th className="py-3 px-6 text-center">Total Amount</th>
 											<th className="py-3 px-6 text-center">
@@ -179,7 +186,13 @@ const AdminOrders = () => {
 						</div>
 					</div>
 				</div>
-			</>
+			</div>
+			<Pagination
+				page={page}
+				setPage={setPage}
+				handlePage={handlePage}
+				totalItems={totalOrders}
+			/>
 		</div>
 	);
 };
