@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ITEMS_PER_PAGE } from "../../../app/constants";
+import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	fetchAllOrdersAsync,
@@ -22,6 +22,14 @@ const AdminOrders = () => {
 	const totalOrders = useSelector(selectTotalOrders);
 	const [editableOrderId, setEditableOrderId] = useState(-1);
 	const [sort, setSort] = useState({});
+
+	const handleEdit = (order) => {
+		console.log("Edit");
+	};
+
+	const handleShow = () => {
+		console.log("Show");
+	};
 
 	useEffect(() => {
 		const pagination = { _page: page, _limit: ITEMS_PER_PAGE };
@@ -70,7 +78,8 @@ const AdminOrders = () => {
 																/>
 															</div>
 															<span>
-																{item.title} - #{item.quantity}- ${item.price}
+																{item.title} - #{item.quantity}- $
+																{discountedPrice(item)}
 															</span>
 														</div>
 													))}
@@ -103,11 +112,17 @@ const AdminOrders = () => {
 												</td>
 												<td className="py-3 px-6 text-center">
 													<div className="flex item-center justify-center">
-														<div className="w-6 mr-2 transform hover:text-purple-500 hover:scale-120">
-															<EyeIcon className="w-4 h-4" />
+														<div className="w-6 mr-4 transform hover:text-purple-500 hover:scale-120">
+															<EyeIcon
+																className="w-6 h-6"
+																onClick={(e) => handleShow(order)}
+															/>
 														</div>
 														<div className="w-6 mr-2 transform hover:text-purple-500 hover:scale-120">
-															<PencilIcon className="w-4 h-4" />
+															<PencilIcon
+																className="w-6 h-6"
+																onClick={(e) => handleEdit(order)}
+															/>
 														</div>
 														<div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110"></div>
 													</div>
