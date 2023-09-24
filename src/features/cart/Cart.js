@@ -94,17 +94,19 @@ const Cart = () => {
 											</div>
 
 											<div className="flex">
-												{/* <Modal
-													title={`Delete ${item.product.title}`}
+												<Modal
+													title="Delete Cart Item"
 													message="Are you sure you want to delete this Cart item ?"
 													dangerOption="Delete"
 													cancelOption="Cancel"
 													dangerAction={(e) => handleRemove(e, item.id)}
 													cancelAction={() => setOpenModal(null)}
 													showModal={openModal === item.id}
-												/> */}
+												/>
 												<button
-													onClick={(e) => handleRemove(e, item.id)}
+													onClick={(e) => {
+														setOpenModal(item.id);
+													}}
 													type="button"
 													className="font-medium text-indigo-600 hover:text-indigo-500"
 												>
