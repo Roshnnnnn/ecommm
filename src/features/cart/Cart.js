@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import {
@@ -9,11 +9,13 @@ import {
 } from "./cartSlice";
 import { discountedPrice } from "../../app/constants";
 import { Grid } from "react-loader-spinner";
+import Modal from "../common/Modal";
 
 const Cart = () => {
 	const dispatch = useDispatch();
 	const items = useSelector(selectItems);
 	const status = useSelector(selectCartStatus);
+	const [openModal, setOpenModal] = useState(null);
 
 	const totalAmount = items.reduce(
 		(amount, item) => discountedPrice(item) * item.quantity + amount,
@@ -92,6 +94,15 @@ const Cart = () => {
 											</div>
 
 											<div className="flex">
+												{/* <Modal
+													title={`Delete ${item.product.title}`}
+													message="Are you sure you want to delete this Cart item ?"
+													dangerOption="Delete"
+													cancelOption="Cancel"
+													dangerAction={(e) => handleRemove(e, item.id)}
+													cancelAction={() => setOpenModal(null)}
+													showModal={openModal === item.id}
+												/> */}
 												<button
 													onClick={(e) => handleRemove(e, item.id)}
 													type="button"

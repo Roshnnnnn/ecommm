@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	clearSelectedProduct,
@@ -11,22 +10,11 @@ import {
 } from "../../product/productSlice";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { useEffect, useState } from "react";
+import Modal from "../../common/Modal";
+import { useAlert } from "react-alert";
 
-const ProductForm = () => {
-	const brands = useSelector(selectBrands);
-	const categories = useSelector(selectCategories);
-	const dispatch = useDispatch();
-	const params = useParams();
-	const selectedProduct = useSelector(selectProductById);
-	const [openModal, setOpenModal] = useState(null);
-
-	const handleDelete = () => {
-		const product = { ...selectedProduct };
-		product.deleted = true;
-		dispatch(updateProductAsync(product));
-	};
-
+function ProductForm() {
 	const {
 		register,
 		handleSubmit,
@@ -34,6 +22,13 @@ const ProductForm = () => {
 		reset,
 		formState: { errors },
 	} = useForm();
+	const brands = useSelector(selectBrands);
+	const categories = useSelector(selectCategories);
+	const dispatch = useDispatch();
+	const params = useParams();
+	const selectedProduct = useSelector(selectProductById);
+	const [openModal, setOpenModal] = useState(null);
+	const alert = useAlert();
 
 	const colors = [
 		{
@@ -103,8 +98,14 @@ const ProductForm = () => {
 		}
 	}, [selectedProduct, params.id, setValue]);
 
+	const handleDelete = () => {
+		const product = { ...selectedProduct };
+		product.deleted = true;
+		dispatch(updateProductAsync(product));
+	};
+
 	return (
-		<div>
+		<>
 			<form
 				noValidate
 				onSubmit={handleSubmit((data) => {
@@ -116,7 +117,24 @@ const ProductForm = () => {
 						product.image3,
 						product.thumbnail,
 					];
+					product.highlights = [
+						product.highlight1,
+						product.highlight2,
+						product.highlight3,
+						product.highlight4,
+					];
 					product.rating = 0;
+					if (product.colors) {
+						product.colors = product.colors.map((color) =>
+							colors.find((clr) => clr.id === color)
+						);
+					}
+					if (product.sizes) {
+						product.sizes = product.sizes.map((size) =>
+							sizes.find((sz) => sz.id === size)
+						);
+					}
+
 					delete product["image1"];
 					delete product["image2"];
 					delete product["image3"];
@@ -124,14 +142,16 @@ const ProductForm = () => {
 					product.stock = +product.stock;
 					product.discountPercentage = +product.discountPercentage;
 					console.log(product);
-
 					if (params.id) {
 						product.id = params.id;
-						dispatch(updateProductAsync(product));
 						product.rating = selectedProduct.rating || 0;
+						dispatch(updateProductAsync(product));
+						alert.success("Product Updated");
+
 						reset();
 					} else {
 						dispatch(createProductAsync(product));
+						alert.success("Product Created");
 						reset();
 					}
 				})}
@@ -598,18 +618,19 @@ const ProductForm = () => {
 					>
 						Cancel
 					</button>
+
 					{selectedProduct && !selectedProduct.deleted && (
 						<button
 							onClick={(e) => {
 								e.preventDefault();
-								// setOpenModal(true);
-								handleDelete();
+								setOpenModal(true);
 							}}
 							className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 						>
 							Delete
 						</button>
 					)}
+
 					<button
 						type="submit"
 						className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -618,8 +639,19 @@ const ProductForm = () => {
 					</button>
 				</div>
 			</form>
-		</div>
+			{selectedProduct && (
+				<Modal
+					title={`Delete ${selectedProduct.title}`}
+					message="Are you sure you want to delete this Product ?"
+					dangerOption="Delete"
+					cancelOption="Cancel"
+					dangerAction={handleDelete}
+					cancelAction={() => setOpenModal(null)}
+					showModal={openModal}
+				></Modal>
+			)}
+		</>
 	);
-};
+}
 
 export default ProductForm;
