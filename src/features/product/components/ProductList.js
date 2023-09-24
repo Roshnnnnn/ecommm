@@ -23,8 +23,8 @@ import {
 	ChevronRightIcon,
 	StarIcon,
 } from "@heroicons/react/20/solid";
-import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
 import Pagination from "../../common/Pagination";
+import { ITEMS_PER_PAGE, discountedPrice } from "../../../app/constants";
 
 const sortOptions = [
 	{ name: "Best Rating", sort: "rating", order: "desc", current: false },
@@ -627,16 +627,6 @@ const ProductGrid = ({ products }) => {
 											</p>
 										</div>
 									</div>
-									{product.deleted && (
-										<div>
-											<p className="text-sm text-red-400">product deleted</p>
-										</div>
-									)}
-									{product.stock <= 0 && (
-										<div>
-											<p className="text-sm text-red-400">out of stock</p>
-										</div>
-									)}
 								</div>
 							</Link>
 						))}

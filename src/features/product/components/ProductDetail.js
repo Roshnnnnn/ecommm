@@ -11,6 +11,8 @@ import { useParams } from "react-router-dom";
 import { addToCartAsync, selectItems } from "../../cart/cartSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { discountedPrice } from "../../../app/constants";
+import { useAlert } from "react-alert";
+import { Grid } from "react-loader-spinner";
 
 const colors = [
 	{ name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -47,6 +49,8 @@ export default function ProductDetail() {
 	const dispatch = useDispatch();
 	const params = useParams();
 	const items = useSelector(selectItems);
+	const alert = useAlert();
+	const status = useSelector(selectProductListStatus);
 
 	const handleCart = (e) => {
 		e.preventDefault();
@@ -61,7 +65,7 @@ export default function ProductDetail() {
 			dispatch(addToCartAsync(newItem));
 			console.log(e, "clicked");
 		} else {
-			console.log("Already added");
+			alert.show("Already added");
 		}
 	};
 
@@ -71,6 +75,18 @@ export default function ProductDetail() {
 
 	return (
 		<div className="bg-white">
+			{status === "loading" ? (
+				<Grid
+					height="80"
+					width="80"
+					color="rgb(79, 70, 229) "
+					ariaLabel="grid-loading"
+					radius="12.5"
+					wrapperStyle={{}}
+					wrapperClass=""
+					visible={true}
+				/>
+			) : null}
 			{product ? (
 				<div className="pt-6">
 					<nav aria-label="Breadcrumb">
@@ -315,7 +331,7 @@ export default function ProductDetail() {
 									type="submit"
 									className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
 								>
-									Add to cart
+									Add to Cart
 								</button>
 							</form>
 						</div>

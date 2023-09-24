@@ -5,12 +5,15 @@ import {
 	deleteItemFromCartAsync,
 	selectItems,
 	updateCartAsync,
+	selectCartStatus,
 } from "./cartSlice";
 import { discountedPrice } from "../../app/constants";
+import { Grid } from "react-loader-spinner";
 
 const Cart = () => {
 	const dispatch = useDispatch();
 	const items = useSelector(selectItems);
+	const status = useSelector(selectCartStatus);
 
 	const totalAmount = items.reduce(
 		(amount, item) => discountedPrice(item) * item.quantity + amount,
@@ -35,6 +38,18 @@ const Cart = () => {
 						Cart
 					</h1>
 					<div className="flow-root">
+						{status === "loading" ? (
+							<Grid
+								height="80"
+								width="80"
+								color="rgb(79, 70, 229) "
+								ariaLabel="grid-loading"
+								radius="12.5"
+								wrapperStyle={{}}
+								wrapperClass=""
+								visible={true}
+							/>
+						) : null}
 						<ul role="list" className="-my-6 divide-y divide-gray-200">
 							{items.map((item) => (
 								<li key={item.id} className="flex py-6">

@@ -11,6 +11,8 @@ import { useParams } from "react-router-dom";
 import { addToCartAsync } from "../../cart/cartSlice";
 import { selectLoggedInUser } from "../../auth/authSlice";
 import { discountedPrice } from "../../../app/constants.js";
+import { useAlert } from "react-alert";
+import { Grid } from "react-loader-spinner";
 
 const colors = [
 	{ name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
@@ -46,6 +48,8 @@ export default function AdminProductDetail() {
 	const user = useSelector(selectLoggedInUser);
 	const dispatch = useDispatch();
 	const params = useParams();
+	const alert = useAlert();
+	const status = useSelector(selectProductListStatus);
 
 	const handleCart = (e) => {
 		e.preventDefault();
@@ -61,6 +65,18 @@ export default function AdminProductDetail() {
 
 	return (
 		<div className="bg-white">
+			{status === "loading" ? (
+				<Grid
+					height="80"
+					width="80"
+					color="rgb(79, 70, 229) "
+					ariaLabel="grid-loading"
+					radius="12.5"
+					wrapperStyle={{}}
+					wrapperClass=""
+					visible={true}
+				/>
+			) : null}
 			{product ? (
 				<div className="pt-6">
 					<nav aria-label="Breadcrumb">
