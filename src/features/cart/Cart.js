@@ -95,7 +95,7 @@ const Cart = () => {
 
 											<div className="flex">
 												<Modal
-													title="Delete Cart Item"
+													title={`Delete ${item.title}`}
 													message="Are you sure you want to delete this Cart item ?"
 													dangerOption="Delete"
 													cancelOption="Cancel"
