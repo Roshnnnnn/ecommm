@@ -7,27 +7,30 @@ const initialState = {
 	currentOrder: null,
 	totalOrders: 0,
 };
+//we may need more info of current order
 
 export const createOrderAsync = createAsyncThunk(
-	"cart/createOrder",
+	"order/createOrder",
 	async (order) => {
 		const response = await createOrder(order);
+		// The value we return becomes the `fulfilled` action payload
 		return response.data;
 	}
 );
-
 export const updateOrderAsync = createAsyncThunk(
 	"order/updateOrder",
 	async (order) => {
 		const response = await updateOrder(order);
+		// The value we return becomes the `fulfilled` action payload
 		return response.data;
 	}
 );
 
 export const fetchAllOrdersAsync = createAsyncThunk(
-	"cart/fetchAllOrders",
+	"order/fetchAllOrders",
 	async ({ sort, pagination }) => {
 		const response = await fetchAllOrders(sort, pagination);
+		// The value we return becomes the `fulfilled` action payload
 		return response.data;
 	}
 );

@@ -1,38 +1,38 @@
-import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectLoggedInUser, createUserAsync } from "../authSlice";
-import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-export default function Login() {
+import { selectLoggedInUser, createUserAsync } from "../authSlice";
+import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+
+export default function Signup() {
+	const dispatch = useDispatch();
+	const user = useSelector(selectLoggedInUser);
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-	const dispatch = useDispatch();
-	const user = useSelector(selectLoggedInUser);
-
-	console.log(errors);
-
 	return (
-		<div>
-			{user && <Navigate to="/" replace={true} />}
+		<>
+			{user && <Navigate to="/" replace={true}></Navigate>}
 			<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 				<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 					<img
 						className="mx-auto h-10 w-auto"
-						src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+						src="/ecommerce.png"
 						alt="Your Company"
 					/>
 					<h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-						Create an New Account
+						Create a New Account
 					</h2>
 				</div>
 
 				<div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 					<form
+						noValidate
 						className="space-y-6"
 						onSubmit={handleSubmit((data) => {
 							dispatch(
@@ -64,8 +64,6 @@ export default function Login() {
 										},
 									})}
 									type="email"
-									autoComplete="email"
-									// required
 									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 								/>
 								{errors.email && (
@@ -73,6 +71,7 @@ export default function Login() {
 								)}
 							</div>
 						</div>
+
 						<div>
 							<div className="flex items-center justify-between">
 								<label
@@ -81,7 +80,6 @@ export default function Login() {
 								>
 									Password
 								</label>
-								<div className="text-sm"></div>
 							</div>
 							<div className="mt-2">
 								<input
@@ -97,8 +95,6 @@ export default function Login() {
 										},
 									})}
 									type="password"
-									autoComplete="current-password"
-									// required
 									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 								/>
 								{errors.password && (
@@ -106,6 +102,7 @@ export default function Login() {
 								)}
 							</div>
 						</div>
+
 						<div>
 							<div className="flex items-center justify-between">
 								<label
@@ -114,18 +111,16 @@ export default function Login() {
 								>
 									Confirm Password
 								</label>
-								<div className="text-sm"></div>
 							</div>
 							<div className="mt-2">
 								<input
-									id="confirm-password"
+									id="confirmPassword"
 									{...register("confirmPassword", {
-										required: "confirmPassword is required",
+										required: "confirm password is required",
 										validate: (value, formValues) =>
 											value === formValues.password || "password not matching",
 									})}
 									type="password"
-									// required
 									className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 								/>
 								{errors.confirmPassword && (
@@ -135,6 +130,7 @@ export default function Login() {
 								)}
 							</div>
 						</div>
+
 						<div>
 							<button
 								type="submit"
@@ -146,7 +142,7 @@ export default function Login() {
 					</form>
 
 					<p className="mt-10 text-center text-sm text-gray-500">
-						Already a member?
+						Already a Member?{" "}
 						<Link
 							to="/login"
 							className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
@@ -156,6 +152,6 @@ export default function Login() {
 					</p>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
