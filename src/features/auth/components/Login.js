@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { selectError, selectLoggedInUser } from "../authSlice";
 import { Link, Navigate } from "react-router-dom";
-import { loginUserAsync } from "../authSlice";
+import { checkUserAsync } from "../authSlice";
 import { useForm } from "react-hook-form";
 
 export default function Login() {
@@ -14,6 +14,8 @@ export default function Login() {
 		formState: { errors },
 	} = useForm();
 
+	console.log(errors);
+
 	return (
 		<>
 			{user && <Navigate to="/" replace={true}></Navigate>}
@@ -21,7 +23,7 @@ export default function Login() {
 				<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 					<img
 						className="mx-auto h-10 w-auto"
-						src="/ecommerce.png"
+						src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
 						alt="Your Company"
 					/>
 					<h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -34,7 +36,7 @@ export default function Login() {
 						noValidate
 						onSubmit={handleSubmit((data) => {
 							dispatch(
-								loginUserAsync({ email: data.email, password: data.password })
+								checkUserAsync({ email: data.email, password: data.password })
 							);
 						})}
 						className="space-y-6"
@@ -95,9 +97,7 @@ export default function Login() {
 									<p className="text-red-500">{errors.password.message}</p>
 								)}
 							</div>
-							{error && (
-								<p className="text-red-500">{error || error.message}</p>
-							)}
+							{error && <p className="text-red-500">{error.message}</p>}
 						</div>
 
 						<div>
