@@ -1,6 +1,6 @@
 export function fetchLoggedInUserOrders() {
 	return new Promise(async (resolve) => {
-		const response = await fetch("http://localhost:8080/orders/own/");
+		const response = await fetch("http://localhost:8080/orders/");
 		const data = await response.json();
 		resolve({ data });
 	});
@@ -8,7 +8,7 @@ export function fetchLoggedInUserOrders() {
 
 export function fetchLoggedInUser() {
 	return new Promise(async (resolve) => {
-		const response = await fetch("http://localhost:8080/users/own");
+		const response = await fetch("http://localhost:8080/users");
 		const data = await response.json();
 		resolve({ data });
 	});
