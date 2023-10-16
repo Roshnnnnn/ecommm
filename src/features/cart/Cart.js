@@ -2,13 +2,13 @@ import { Fragment, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
 	deleteItemFromCartAsync,
-	selectCartLoaded,
 	selectCartStatus,
 	selectItems,
 	updateCartAsync,
 } from "./cartSlice";
 import { Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { discountedPrice } from "../../app/constants";
 import { Grid } from "react-loader-spinner";
 import Modal from "../common/Modal";
 
@@ -17,11 +17,10 @@ export default function Cart() {
 
 	const items = useSelector(selectItems);
 	const status = useSelector(selectCartStatus);
-	const cartLoaded = useSelector(selectCartLoaded);
 	const [openModal, setOpenModal] = useState(null);
 
 	const totalAmount = items.reduce(
-		(amount, item) => item.product.discountPrice * item.quantity + amount,
+		(amount, item) => discountedPrice(item.product) * item.quantity + amount,
 		0
 	);
 	const totalItems = items.reduce((total, item) => item.quantity + total, 0);
@@ -36,9 +35,7 @@ export default function Cart() {
 
 	return (
 		<>
-			{!items.length && cartLoaded && (
-				<Navigate to="/" replace={true}></Navigate>
-			)}
+			{!items.length && <Navigate to="/" replace={true}></Navigate>}
 
 			<div>
 				<div className="mx-auto mt-12 bg-white max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -76,7 +73,9 @@ export default function Cart() {
 													<h3>
 														<a href={item.product.id}>{item.product.title}</a>
 													</h3>
-													<p className="ml-4">${item.product.discountPrice}</p>
+													<p className="ml-4">
+														${discountedPrice(item.product)}
+													</p>
 												</div>
 												<p className="mt-1 text-sm text-gray-500">
 													{item.product.brand}
