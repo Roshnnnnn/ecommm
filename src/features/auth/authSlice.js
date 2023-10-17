@@ -3,7 +3,7 @@ import { checkUser, createUser, signOut } from "./authAPI";
 import { updateUser } from "../user/userAPI";
 
 const initialState = {
-	loggedInUser: null,
+	loggedInUser: null, // this should only contain user identity => 'id'/'role'
 	status: "idle",
 	error: null,
 };
@@ -63,7 +63,6 @@ export const authSlice = createSlice({
 				state.status = "idle";
 				state.error = action.payload;
 			})
-
 			.addCase(signOutAsync.pending, (state) => {
 				state.status = "loading";
 			})

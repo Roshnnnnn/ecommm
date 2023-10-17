@@ -21,15 +21,15 @@ export function checkUser(loginInfo) {
 			});
 			if (response.ok) {
 				const data = await response.json();
-				console.log({ data });
 				resolve({ data });
 			} else {
 				const error = await response.json();
-				reject({ error });
+				reject(error);
 			}
 		} catch (error) {
-			reject({ error });
+			reject(error);
 		}
+
 		// TODO: on server it will only return some info of user (not password)
 	});
 }
