@@ -471,7 +471,7 @@ function ProductForm() {
 					dangerAction={handleDelete}
 					cancelAction={() => setOpenModal(null)}
 					showModal={openModal}
-				/>
+				></Modal>
 			)}
 		</>
 	);
