@@ -1,4 +1,3 @@
-// import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import Home from "./pages/Home";
 import LoginPage from "./pages/LoginPage";
@@ -25,12 +24,20 @@ import AdminHome from "./pages/AdminHome";
 import AdminProductDetailPage from "./pages/AdminProductDetailPage";
 import AdminProductFormPage from "./pages/AdminProductFormPage";
 import AdminOrdersPage from "./pages/AdminOrdersPage";
+import { positions, Provider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
+const options = {
+	timeout: 5000,
+	position: positions.BOTTOM_LEFT,
+};
+
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: (
 			<Protected>
-				<Home></Home>
+				<Home />
 			</Protected>
 		),
 	},
@@ -38,23 +45,23 @@ const router = createBrowserRouter([
 		path: "/admin",
 		element: (
 			<ProtectedAdmin>
-				<AdminHome></AdminHome>
+				<AdminHome />
 			</ProtectedAdmin>
 		),
 	},
 	{
 		path: "/login",
-		element: <LoginPage></LoginPage>,
+		element: <LoginPage />,
 	},
 	{
 		path: "/signup",
-		element: <SignupPage></SignupPage>,
+		element: <SignupPage />,
 	},
 	{
 		path: "/cart",
 		element: (
 			<Protected>
-				<CartPage></CartPage>
+				<CartPage />
 			</Protected>
 		),
 	},
@@ -62,7 +69,7 @@ const router = createBrowserRouter([
 		path: "/checkout",
 		element: (
 			<Protected>
-				<Checkout></Checkout>
+				<Checkout />
 			</Protected>
 		),
 	},
@@ -70,7 +77,7 @@ const router = createBrowserRouter([
 		path: "/product-detail/:id",
 		element: (
 			<Protected>
-				<ProductDetailPage></ProductDetailPage>
+				<ProductDetailPage />
 			</Protected>
 		),
 	},
@@ -78,7 +85,7 @@ const router = createBrowserRouter([
 		path: "/admin/product-detail/:id",
 		element: (
 			<ProtectedAdmin>
-				<AdminProductDetailPage></AdminProductDetailPage>
+				<AdminProductDetailPage />
 			</ProtectedAdmin>
 		),
 	},
@@ -86,7 +93,7 @@ const router = createBrowserRouter([
 		path: "/admin/product-form",
 		element: (
 			<ProtectedAdmin>
-				<AdminProductFormPage></AdminProductFormPage>
+				<AdminProductFormPage />
 			</ProtectedAdmin>
 		),
 	},
@@ -94,7 +101,7 @@ const router = createBrowserRouter([
 		path: "/admin/orders",
 		element: (
 			<ProtectedAdmin>
-				<AdminOrdersPage></AdminOrdersPage>
+				<AdminOrdersPage />
 			</ProtectedAdmin>
 		),
 	},
@@ -102,33 +109,45 @@ const router = createBrowserRouter([
 		path: "/admin/product-form/edit/:id",
 		element: (
 			<ProtectedAdmin>
-				<AdminProductFormPage></AdminProductFormPage>
+				<AdminProductFormPage />
 			</ProtectedAdmin>
 		),
 	},
 	{
 		path: "/order-success/:id",
-		element: <OrderSuccessPage></OrderSuccessPage>,
+		element: (
+			<Protected>
+				<OrderSuccessPage />
+			</Protected>
+		),
 	},
 	{
 		path: "/orders",
-		element: <UserOrdersPage></UserOrdersPage>,
+		element: (
+			<Protected>
+				<UserOrdersPage />
+			</Protected>
+		),
 	},
 	{
 		path: "/profile",
-		element: <UserProfilePage></UserProfilePage>,
+		element: (
+			<Protected>
+				<UserProfilePage />
+			</Protected>
+		),
 	},
 	{
 		path: "/logout",
-		element: <Logout></Logout>,
+		element: <Logout />,
 	},
 	{
 		path: "/forgot-password",
-		element: <ForgotPasswordPage></ForgotPasswordPage>,
+		element: <ForgotPasswordPage />,
 	},
 	{
 		path: "*",
-		element: <PageNotFound></PageNotFound>,
+		element: <PageNotFound />,
 	},
 ]);
 
@@ -138,15 +157,18 @@ function App() {
 
 	useEffect(() => {
 		if (user) {
-			dispatch(fetchItemsByUserIdAsync(user.id));
-			dispatch(fetchLoggedInUserAsync(user.id));
+			dispatch(fetchItemsByUserIdAsync());
+			// we can get req.user by token on backend so no need to give in front-end
+			dispatch(fetchLoggedInUserAsync());
 		}
 	}, [dispatch, user]);
 
 	return (
 		<>
 			<div className="App">
-				<RouterProvider router={router} />
+				<Provider template={AlertTemplate} {...options}>
+					<RouterProvider router={router} />
+				</Provider>
 				{/* Link must be inside the Provider */}
 			</div>
 		</>

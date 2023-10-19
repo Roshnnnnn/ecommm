@@ -1,14 +1,15 @@
-import React from "react";
-import Navbar from "../features/navbar/Navbar";
+import NavBar from "../features/navbar/Navbar";
 import UserOrders from "../features/user/components/UserOrders";
 
-const UserOrdersPage = () => {
+function UserOrdersPage() {
 	return (
-		<Navbar>
-			<h1 className="text-2xl m-auto">My orders</h1>
-			<UserOrders />
-		</Navbar>
+		<div>
+			<NavBar>
+				<h1 className="mx-auto text-2xl">My Orders</h1>
+				<UserOrders />
+			</NavBar>
+		</div>
 	);
-};
+}
 
 export default UserOrdersPage;

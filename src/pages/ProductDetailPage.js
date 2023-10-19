@@ -6,9 +6,9 @@ function ProductDetailPage() {
 	return (
 		<div>
 			<NavBar>
-				<ProductDetail></ProductDetail>
+				<ProductDetail />
 			</NavBar>
-			<Footer></Footer>
+			<Footer />
 		</div>
 	);
 }
