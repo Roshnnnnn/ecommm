@@ -45,10 +45,10 @@ export function deleteItemFromCart(itemId) {
 	});
 }
 
-export function resetCart(userId) {
+export function resetCart() {
 	// get all items of user's cart - and then delete each
 	return new Promise(async (resolve) => {
-		const response = await fetchItemsByUserId(userId);
+		const response = await fetchItemsByUserId();
 		const items = response.data;
 		for (let item of items) {
 			await deleteItemFromCart(item.id);
