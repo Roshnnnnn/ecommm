@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
 	fetchLoggedInUserOrderAsync,
+	selectUserInfo,
 	selectUserInfoStatus,
 	selectUserOrders,
 } from "../userSlice";
@@ -10,7 +11,6 @@ import { Grid } from "react-loader-spinner";
 
 export default function UserOrders() {
 	const dispatch = useDispatch();
-	// const userInfo = useSelector(selectUserInfo);
 	const orders = useSelector(selectUserOrders);
 	const status = useSelector(selectUserInfoStatus);
 
