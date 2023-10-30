@@ -11,7 +11,7 @@ import { selectCurrentOrder } from "../features/order/orderSlice";
 // recreating the Stripe object on every render.
 // This is your test publishable API key.
 const stripePromise = loadStripe(
-	"pk_test_51LS5KhSA2eW7tOKacrogxAKKov7BySlOpvF3VI0DdgS9Ko2SNzDc8Hmq3XyRZhR8aN3eGK5yec0RXm9Sznv8IYMx00M96iCwet"
+	"pk_test_51O6xGlSDlf4MHZGzvIuITo8uE56mAEEDlsq5vJGi5RVKSJvOcwSCiDdUG03HifGWLewO2pqq2IC65gyVpOkU0U4100VrKm6MHT"
 );
 
 export default function StripeCheckout() {
@@ -23,10 +23,12 @@ export default function StripeCheckout() {
 		fetch("http://localhost:8080/create-payment-intent", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				totalAmount: currentOrder.totalAmount,
-				orderId: currentOrder.id,
-			}),
+			body: JSON.stringify({ totalAmount: currentOrder.totalAmount }),
+			meta: {
+				order_id: currentOrder.id,
+				// this info will go to stripe => and then to our webhook
+				// so we can conclude that payment was successful, even if client closes window after pay
+			},
 		})
 			.then((res) => res.json())
 			.then((data) => setClientSecret(data.clientSecret));
